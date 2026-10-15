@@ -1,0 +1,2243 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="dark" data-accent="turquoise">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>مرکز فرماندهی مدیرعامل | هلدینگ آریانا</title>
+    <link
+      rel="canonical"
+      href="https://mmd-ai.com/projects/ceo-dashboard/index.html"
+    />
+    <meta
+      name="description"
+      content="نمونه‌کار طراحی و توسعه توسط محمدرضا اسدپور: مرکز فرماندهی مدیرعامل، داشبورد یکپارچه برای رصد زنده درآمد، سفارش‌ها، نرخ بازار و شاخص‌های کلیدی کسب‌وکار."
+    />
+    <meta name="author" content="Mohammadreza Asadpour" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="مرکز فرماندهی مدیرعامل | هلدینگ آریانا" />
+    <meta
+      property="og:description"
+      content="نمونه‌کار طراحی و توسعه توسط محمدرضا اسدپور: مرکز فرماندهی مدیرعامل، داشبورد یکپارچه برای رصد زنده درآمد، سفارش‌ها، نرخ بازار و شاخص‌های کلیدی کسب‌وکار."
+    />
+    <meta
+      property="og:url"
+      content="https://mmd-ai.com/projects/ceo-dashboard/index.html"
+    />
+    <meta
+      property="og:image"
+      content="https://mmd-ai.com/assets/images/dashbord.webp"
+    />
+    <meta property="og:site_name" content="Mohammadreza Asadpour" />
+    <meta name="theme-color" content="#050c20" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <script>
+      /* اعمال تنظیمات ذخیره‌شده پیش از اولین رندر تا صفحه چشمک نزند */
+      try {
+        var s = JSON.parse(localStorage.getItem("ariana.settings.v1") || "{}");
+        var r = document.documentElement;
+        if (s.theme) r.setAttribute("data-theme", s.theme);
+        if (s.accent) r.setAttribute("data-accent", s.accent);
+        var fs = [0.9, 1, 1.1, 1.22][s.fontSize == null ? 1 : s.fontSize] || 1;
+        r.style.setProperty("--fs-scale", fs);
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+    <style>
+      /* =====================================================================
+         TOKENS — پالت لاجورد / فیروزه / زعفران
+         ===================================================================== */
+      :root {
+        --font: "Vazirmatn", system-ui, -apple-system, "Segoe UI", Tahoma,
+          sans-serif;
+        --r-xs: 8px;
+        --r-sm: 12px;
+        --r-md: 18px;
+        --r-lg: 28px;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --side-w: 262px;
+        --rail-w: 80px;
+        --top-h: 72px;
+        --bar-h: 68px;
+        --fs-scale: 1;
+        /* رنگ‌های داده (مستقل از رنگ اصلی) */
+        --c1: #38d9c8;
+        --c2: #f5b83d;
+        --c3: #9b8cff;
+        --c4: #ff6b86;
+        --c5: #5aa9ff;
+      }
+      html {
+        font-size: calc(16px * var(--fs-scale));
+        -webkit-text-size-adjust: 100%;
+      }
+      [data-theme="dark"] {
+        --bg: #050c20;
+        --bg-glow:
+          radial-gradient(900px 520px at 92% -8%, rgba(56, 217, 200, 0.1), transparent 60%),
+          radial-gradient(800px 480px at -6% 10%, rgba(245, 184, 61, 0.06), transparent 55%),
+          radial-gradient(1100px 700px at 50% 118%, rgba(90, 110, 255, 0.09), transparent 60%);
+        --surface: #0b1738;
+        --surface-2: #10204a;
+        --surface-3: #182b5e;
+        --line: rgba(160, 182, 255, 0.11);
+        --line-soft: rgba(160, 182, 255, 0.06);
+        --text: #edf1ff;
+        --muted: #a3aecf;
+        --faint: #7381aa;
+        --up: #34d399;
+        --down: #ff5d78;
+        --shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7);
+        --overlay: rgba(3, 7, 20, 0.74);
+        --grid: rgba(160, 182, 255, 0.09);
+      }
+      [data-theme="light"] {
+        --bg: #e8eefa;
+        --bg-glow:
+          radial-gradient(900px 500px at 92% -10%, rgba(56, 217, 200, 0.16), transparent 60%),
+          radial-gradient(800px 480px at -6% 8%, rgba(245, 184, 61, 0.14), transparent 55%);
+        --surface: #ffffff;
+        --surface-2: #f2f5fc;
+        --surface-3: #e6ebf7;
+        --line: rgba(20, 38, 90, 0.11);
+        --line-soft: rgba(20, 38, 90, 0.06);
+        --text: #0a1230;
+        --muted: #4b597c;
+        --faint: #7d8bb0;
+        --up: #0b9a6a;
+        --down: #e0214a;
+        --shadow: 0 24px 48px -26px rgba(20, 38, 90, 0.4);
+        --overlay: rgba(214, 223, 243, 0.72);
+        --grid: rgba(20, 38, 90, 0.08);
+      }
+      [data-accent="turquoise"] { --accent: #38d9c8; --accent-2: #f5b83d; --on-accent: #04201c; }
+      [data-accent="violet"] { --accent: #9b8cff; --accent-2: #5ed6c8; --on-accent: #120c3d; }
+      [data-accent="ruby"] { --accent: #ff6b86; --accent-2: #f5b83d; --on-accent: #3a0612; }
+      [data-accent="saffron"] { --accent: #f5b83d; --accent-2: #38d9c8; --on-accent: #2b1b00; }
+      [data-theme="dark"] { --accent-ink: var(--accent); }
+      [data-theme="light"][data-accent="turquoise"] { --accent-ink: #087d73; }
+      [data-theme="light"][data-accent="violet"] { --accent-ink: #5642e0; }
+      [data-theme="light"][data-accent="ruby"] { --accent-ink: #cf1f48; }
+      [data-theme="light"][data-accent="saffron"] { --accent-ink: #9a6200; }
+      :root {
+        --accent-dim: color-mix(in srgb, var(--accent) 16%, transparent);
+        --up-dim: color-mix(in srgb, var(--up) 15%, transparent);
+        --down-dim: color-mix(in srgb, var(--down) 15%, transparent);
+        --gold-dim: color-mix(in srgb, var(--c2) 18%, transparent);
+      }
+
+      /* =====================================================================
+         BASE
+         ===================================================================== */
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        font-size: 1rem;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        overscroll-behavior-y: none;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: var(--bg-glow);
+        pointer-events: none;
+      }
+      ::selection { background: var(--accent); color: var(--on-accent); }
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      a { color: inherit; text-decoration: none; }
+      button { font-family: inherit; cursor: pointer; color: inherit; -webkit-tap-highlight-color: transparent; }
+      input, select { font-family: inherit; }
+      .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+      .tappable { transition: transform 0.12s var(--ease); }
+      .tappable:active { transform: scale(0.95); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+      .icon { width: 19px; height: 19px; stroke: currentColor; stroke-width: 1.9; fill: none; stroke-linecap: round; stroke-linejoin: round; display: block; flex-shrink: 0; }
+
+      body.no-anim *, body.no-anim *::before, body.no-anim *::after { animation: none !important; transition: none !important; }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+      }
+
+      /* =====================================================================
+         SHELL
+         ===================================================================== */
+      .shell { display: flex; min-height: 100vh; }
+
+      .sidebar {
+        width: var(--side-w);
+        flex: none;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 20px 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        background: color-mix(in srgb, var(--surface) 86%, transparent);
+        border-inline-end: 1px solid var(--line);
+        z-index: 45;
+      }
+      .brand { display: flex; align-items: center; gap: 12px; padding: 4px 8px 20px; }
+      .brand-mark {
+        width: 44px; height: 44px; flex: none; border-radius: 14px;
+        display: grid; place-items: center;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2));
+        color: var(--on-accent);
+        box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--accent) 60%, transparent);
+      }
+      .brand-mark svg { width: 28px; height: 28px; }
+      .brand-text b { display: block; font-size: 1.02rem; font-weight: 800; line-height: 1.3; }
+      .brand-text span { display: block; font-size: 0.72rem; color: var(--muted); }
+
+      .nav-label { font-size: 0.72rem; color: var(--faint); font-weight: 700; margin: 18px 12px 6px; }
+      .nav-item {
+        position: relative;
+        display: flex; align-items: center; gap: 12px;
+        padding: 11px 12px;
+        border-radius: var(--r-sm);
+        color: var(--muted);
+        font-size: 0.92rem; font-weight: 500;
+        transition: background 0.18s ease, color 0.18s ease;
+      }
+      .nav-item .icon { color: var(--faint); transition: color 0.18s ease; }
+      .nav-item:hover { background: var(--surface-2); color: var(--text); }
+      .nav-item:hover .icon { color: var(--text); }
+      .nav-item.active { background: var(--accent-dim); color: var(--accent-ink); font-weight: 700; }
+      .nav-item.active .icon { color: var(--accent-ink); }
+      .nav-item.active::before {
+        content: ""; position: absolute; inset-inline-start: -14px; top: 22%; bottom: 22%; width: 4px;
+        border-radius: 0 4px 4px 0; background: var(--accent);
+      }
+      [dir="rtl"] .nav-item.active::before { border-radius: 4px 0 0 4px; }
+      .nav-item .badge {
+        margin-inline-start: auto; background: var(--gold-dim); color: var(--c2);
+        font-size: 0.7rem; font-weight: 800; padding: 1px 8px; border-radius: 20px;
+      }
+      [data-theme="light"] .nav-item .badge { color: #946100; }
+
+      .sidebar-foot { margin-top: auto; padding-top: 14px; display: grid; gap: 10px; }
+      .sys-status {
+        display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--muted);
+        padding: 9px 12px; border-radius: var(--r-sm); background: var(--surface-2);
+      }
+      .mini-profile {
+        display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: var(--r-sm);
+        background: var(--surface-2); border: 1px solid var(--line-soft); cursor: pointer; width: 100%; text-align: start;
+        transition: background 0.15s ease;
+      }
+      .mini-profile:hover { background: var(--surface-3); }
+      .mini-profile b { font-size: 0.84rem; display: block; line-height: 1.35; }
+      .mini-profile span { font-size: 0.72rem; color: var(--muted); }
+      .avatar {
+        width: 40px; height: 40px; border-radius: 12px; flex: none; display: grid; place-items: center;
+        background: linear-gradient(140deg, var(--accent-2), var(--accent)); color: var(--on-accent);
+        font-weight: 800; font-size: 0.86rem;
+      }
+
+      .live-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--up); flex: none; }
+      .live-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--up); opacity: 0; animation: ping 2.4s ease-out infinite; }
+      @keyframes ping { 0% { transform: scale(0.5); opacity: 0.8; } 80%, 100% { transform: scale(1.6); opacity: 0; } }
+
+      .backdrop { position: fixed; inset: 0; background: var(--overlay); backdrop-filter: blur(4px); z-index: 60; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+      .backdrop.show { opacity: 1; pointer-events: auto; }
+
+      .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+      .topbar {
+        position: sticky; top: 0; z-index: 30;
+        height: calc(var(--top-h) + env(safe-area-inset-top, 0px));
+        padding: env(safe-area-inset-top, 0px) 28px 0;
+        display: flex; align-items: center; gap: 14px;
+        background: color-mix(in srgb, var(--bg) 78%, transparent);
+        backdrop-filter: blur(18px) saturate(1.3);
+        -webkit-backdrop-filter: blur(18px) saturate(1.3);
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .top-title { min-width: 0; }
+      .page-title { font-size: 1.2rem; font-weight: 800; line-height: 1.35; }
+      .page-sub { font-size: 0.78rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .top-spacer { flex: 1; }
+      .search-box {
+        position: relative; display: flex; align-items: center; gap: 9px;
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-sm);
+        padding: 0 14px; height: 42px; width: min(340px, 30vw); color: var(--faint);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+      .search-box input { background: none; border: none; outline: none; color: var(--text); font-size: 0.86rem; width: 100%; height: 100%; }
+      .search-box input::placeholder { color: var(--faint); }
+      .kbd { font-size: 0.68rem; border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; color: var(--faint); font-family: inherit; line-height: 1.6; }
+      .topbar-actions { display: flex; align-items: center; gap: 8px; }
+      .icon-btn {
+        position: relative; width: 42px; height: 42px; border-radius: var(--r-sm);
+        border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+        display: grid; place-items: center; transition: color 0.15s ease, background 0.15s ease;
+      }
+      .icon-btn:hover { color: var(--text); background: var(--surface-2); }
+      .icon-btn .count {
+        position: absolute; top: -5px; inset-inline-start: -5px; background: var(--down); color: #fff;
+        font-size: 0.64rem; font-weight: 800; min-width: 18px; height: 18px; border-radius: 20px;
+        display: grid; place-items: center; padding: 0 4px; box-shadow: 0 0 0 2px var(--bg);
+      }
+      .clock-pill {
+        display: flex; align-items: center; gap: 8px; padding: 0 14px; height: 42px; border-radius: var(--r-sm);
+        background: var(--surface); border: 1px solid var(--line); font-size: 0.82rem; font-weight: 700; color: var(--muted);
+        white-space: nowrap;
+      }
+      .clock-pill b { color: var(--text); font-weight: 800; }
+      .mobile-only { display: none; }
+
+      .content { container: c / inline-size; padding: 26px 28px 40px; max-width: 1560px; width: 100%; margin: 0 auto; }
+      .page { display: none; }
+      .page.active { display: block; animation: pageIn 0.5s var(--ease) both; }
+      @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+      /* =====================================================================
+         PANELS / COMMON
+         ===================================================================== */
+      .panel {
+        position: relative; min-width: 0;
+        background: linear-gradient(180deg, color-mix(in srgb, var(--text) 3.5%, transparent), transparent 46%), var(--surface);
+        border: 1px solid var(--line); border-radius: var(--r-md); padding: 20px;
+      }
+      .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+      .panel-title { font-size: 1.04rem; font-weight: 800; line-height: 1.45; }
+      .panel-sub { display: block; font-size: 0.78rem; font-weight: 500; color: var(--muted); margin-top: 1px; }
+
+      .seg-ctrl { display: inline-flex; gap: 4px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 4px; }
+      .seg-btn { padding: 6px 14px; border-radius: 9px; font-size: 0.78rem; font-weight: 700; color: var(--muted); border: none; background: none; transition: background 0.15s ease, color 0.15s ease; }
+      .seg-btn:hover { color: var(--text); }
+      .seg-btn.active { background: var(--surface-3); color: var(--accent-ink); box-shadow: 0 2px 8px -3px rgba(0, 0, 0, 0.35); }
+
+      .dchip { display: inline-flex; align-items: center; gap: 3px; font-size: 0.74rem; font-weight: 700; padding: 2px 9px 2px 8px; border-radius: 99px; white-space: nowrap; line-height: 1.7; }
+      .dchip.up { color: var(--up); background: var(--up-dim); }
+      .dchip.down { color: var(--down); background: var(--down-dim); }
+      .dchip.flat { color: var(--muted); background: var(--surface-3); }
+      .dchip .icon { width: 12px; height: 12px; stroke-width: 2.6; }
+
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface-2);
+        color: var(--text); border-radius: var(--r-sm); padding: 9px 16px; font-size: 0.82rem; font-weight: 700;
+        transition: background 0.15s ease, border-color 0.15s ease;
+      }
+      .btn:hover { background: var(--surface-3); }
+      .btn.primary { background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: var(--on-accent); border: none; font-weight: 800; }
+      .btn.primary:hover { filter: brightness(1.06); box-shadow: 0 10px 24px -10px var(--accent); }
+      .btn .icon { width: 16px; height: 16px; }
+
+      .px { display: inline-block; border-radius: 6px; padding: 0 4px; margin: 0 -4px; }
+      @keyframes flashUp { 0% { background: var(--up-dim); color: var(--up); } 100% { background: transparent; } }
+      @keyframes flashDown { 0% { background: var(--down-dim); color: var(--down); } 100% { background: transparent; } }
+      .px.tick-up { animation: flashUp 1.3s ease-out; }
+      .px.tick-down { animation: flashDown 1.3s ease-out; }
+
+      .spark { width: 100%; height: 100%; overflow: visible; display: block; }
+      .spark path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+      .spark .area { fill: currentColor; stroke: none; opacity: 0.12; }
+      .spark.up { color: var(--up); }
+      .spark.down { color: var(--down); }
+      .spark.accent { color: var(--accent); }
+
+      .chart-box { position: relative; height: 300px; }
+      .chart-box.sm { height: 240px; }
+
+      .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.76rem; color: var(--muted); font-weight: 600; }
+      .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-inline-end: 6px; vertical-align: -0.5px; }
+
+      /* =====================================================================
+         HERO — درآمد زنده امروز
+         ===================================================================== */
+      .hero {
+        --h-text: #eef2ff; --h-muted: #a9b7e6; --h-line: rgba(160, 190, 255, 0.16);
+        position: relative; overflow: hidden; isolation: isolate; color: var(--h-text);
+        border-radius: var(--r-lg); border: 1px solid rgba(160, 190, 255, 0.2);
+        background: linear-gradient(135deg, #12296b 0%, #0b1b4d 50%, #07102f 100%);
+        box-shadow: var(--shadow); margin-bottom: 18px;
+        display: grid; grid-template-columns: minmax(0, 1fr);
+      }
+      .hero::before {
+        content: ""; position: absolute; inset: 0; z-index: -2;
+        background:
+          radial-gradient(620px 320px at 12% -10%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 62%),
+          radial-gradient(520px 300px at 100% 110%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 60%);
+      }
+      .hero-lattice {
+        position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; color: #8fb8ff; opacity: 0.2;
+        -webkit-mask-image: radial-gradient(ellipse 70% 90% at 88% 12%, #000 0%, transparent 72%);
+        mask-image: radial-gradient(ellipse 70% 90% at 88% 12%, #000 0%, transparent 72%);
+        pointer-events: none;
+      }
+      .hero-main { padding: 26px 26px 18px; min-width: 0; }
+      .hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+      .hero-greet { font-size: 0.86rem; color: var(--h-muted); font-weight: 500; }
+      .hero-label { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 800; margin-top: 2px; }
+      .live-pill {
+        display: inline-flex; align-items: center; gap: 7px; font-size: 0.72rem; font-weight: 700; padding: 3px 10px 3px 12px;
+        border-radius: 99px; background: rgba(52, 211, 153, 0.14); color: #5ee9b5;
+      }
+      .live-pill .live-dot { background: #34d399; }
+      .live-pill .live-dot::after { border-color: #34d399; }
+      .hero-figure { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+      .hero-num { font-size: clamp(3.1rem, 1.6rem + 6.4vw, 6.4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; }
+      .hero-unit { font-size: clamp(0.95rem, 0.8rem + 0.5vw, 1.25rem); font-weight: 600; color: var(--h-muted); }
+      .hero-fx { margin-top: 6px; font-size: 0.82rem; color: var(--h-muted); }
+      .hero .dchip.up { color: #5ee9b5; background: rgba(52, 211, 153, 0.15); }
+      .hero .dchip.down { color: #ff8da1; background: rgba(255, 93, 120, 0.16); }
+      .hero .dchip.flat { color: var(--h-muted); background: rgba(255, 255, 255, 0.08); }
+      .hero-chart { position: relative; height: 190px; margin-top: 14px; }
+      .hero .legend { color: var(--h-muted); margin-top: 8px; }
+
+      .hero-side { border-top: 1px solid var(--h-line); padding: 22px 26px 24px; display: grid; gap: 22px; align-content: start; min-width: 0; }
+      .goal { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 18px; align-items: center; }
+      .ring { position: relative; width: 112px; height: 112px; }
+      .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+      .ring circle { fill: none; stroke-width: 9; }
+      .ring .trk { stroke: rgba(255, 255, 255, 0.1); }
+      .ring .val { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.9s var(--ease), stroke 0.3s; }
+      .ring .val.over { stroke: var(--accent-2); }
+      .ring-c { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; font-weight: 800; font-size: 1.5rem; line-height: 1; }
+      .ring-c small { display: block; font-size: 0.66rem; font-weight: 600; color: var(--h-muted); margin-top: 5px; }
+      .goal-list { display: grid; gap: 9px; font-size: 0.82rem; min-width: 0; }
+      .goal-list div { display: flex; justify-content: space-between; gap: 10px; color: var(--h-muted); }
+      .goal-list b { color: var(--h-text); font-weight: 700; white-space: nowrap; }
+      .hero-rates { display: grid; gap: 2px; }
+      .hero-rates-title { display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; font-weight: 700; color: var(--h-muted); margin-bottom: 6px; }
+      .hr-row { display: grid; grid-template-columns: minmax(0, 1fr) 64px auto; gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid var(--h-line); }
+      .hr-row:first-of-type { border-top: none; }
+      .hr-name b { display: block; font-size: 0.88rem; font-weight: 700; line-height: 1.4; }
+      .hr-name span { font-size: 0.7rem; color: var(--h-muted); }
+      .hr-spark { height: 26px; }
+      .hr-px { text-align: end; }
+      .hr-px b { display: block; font-size: 0.92rem; font-weight: 800; }
+      .hr-px small { font-size: 0.7rem; font-weight: 700; }
+      .hr-px small.up { color: #5ee9b5; }
+      .hr-px small.down { color: #ff8da1; }
+
+      @container c (min-width: 940px) {
+        .hero { grid-template-columns: minmax(0, 1.75fr) minmax(320px, 1fr); }
+        .hero-side { border-top: none; border-inline-start: 1px solid var(--h-line); }
+        .hero-main { padding: 30px 32px 22px; }
+        .hero-chart { height: 210px; }
+      }
+
+      /* =====================================================================
+         KPI RIBBON
+         ===================================================================== */
+      .ribbon {
+        display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line);
+        border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; margin-bottom: 18px;
+      }
+      .seg { background: var(--surface); padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+      .seg-label { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+      .seg-value { font-size: 1.7rem; font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; }
+      .seg-value small { font-size: 0.72rem; font-weight: 600; color: var(--faint); margin-inline-start: 5px; letter-spacing: 0; }
+      .seg-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; min-height: 30px; }
+      .seg-spark { width: 64px; height: 28px; flex: none; }
+      .mini-stack { display: flex; height: 8px; border-radius: 8px; overflow: hidden; gap: 2px; width: 100%; }
+      .mini-stack i { display: block; height: 100%; border-radius: 3px; }
+      @container c (min-width: 640px) { .ribbon { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+      @container c (min-width: 1180px) { .ribbon { grid-template-columns: repeat(6, minmax(0, 1fr)); } .seg { padding: 18px; } }
+      .ribbon.r4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @container c (min-width: 900px) { .ribbon.r4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+      /* =====================================================================
+         BENTO
+         ===================================================================== */
+      .bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+      .bento > * { grid-column: span 12; }
+      @container c (min-width: 960px) { .bento > .b-feed, .bento > .b-subs { grid-column: span 6; } }
+      @container c (min-width: 1240px) {
+        .bento > .b-fin { grid-column: span 8; }
+        .bento > .b-feed { grid-column: span 4; }
+        .bento > .b-subs { grid-column: span 5; }
+        .bento > .b-proj { grid-column: span 7; }
+      }
+      .stats3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line-soft); }
+      .stat b { display: block; font-size: 1.12rem; font-weight: 800; line-height: 1.4; }
+      .stat span { font-size: 0.74rem; color: var(--muted); }
+
+      /* feed */
+      .b-feed { display: flex; flex-direction: column; }
+      .feed-list { list-style: none; overflow-y: auto; max-height: 392px; margin: 0 -8px; padding: 0 8px; }
+      .feed-item { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line-soft); }
+      .feed-item:last-child { border-bottom: none; }
+      .feed-item.new { animation: feedIn 0.6s var(--ease); }
+      @keyframes feedIn { from { opacity: 0; transform: translateY(-10px); background: var(--accent-dim); } to { opacity: 1; transform: none; background: transparent; } }
+      .feed-ico { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; }
+      .feed-ico .icon { width: 17px; height: 17px; }
+      .feed-txt b { display: block; font-size: 0.84rem; font-weight: 700; line-height: 1.5; }
+      .feed-txt span { font-size: 0.72rem; color: var(--muted); }
+      .feed-val { text-align: end; font-size: 0.82rem; font-weight: 800; white-space: nowrap; }
+      .feed-val small { display: block; font-size: 0.68rem; font-weight: 500; color: var(--faint); }
+
+      /* subsidiaries */
+      .share-bar { display: flex; height: 14px; border-radius: 10px; overflow: hidden; gap: 3px; margin-bottom: 8px; }
+      .share-bar i { display: block; height: 100%; border-radius: 4px; transition: flex-grow 0.6s var(--ease); }
+      .sub-row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line-soft); }
+      .sub-row:last-child { border-bottom: none; padding-bottom: 0; }
+      .sub-dot { width: 10px; height: 10px; border-radius: 4px; }
+      .sub-name b { display: block; font-size: 0.88rem; font-weight: 700; line-height: 1.4; }
+      .sub-name span { font-size: 0.72rem; color: var(--muted); }
+      .sub-val { font-size: 0.86rem; font-weight: 800; text-align: end; white-space: nowrap; }
+      .sub-val small { display: block; font-size: 0.7rem; color: var(--faint); font-weight: 500; }
+
+      /* table */
+      .tbl-wrap { overflow-x: auto; margin: 0 -20px -8px; padding: 0 20px 8px; }
+      table { width: 100%; border-collapse: collapse; }
+      thead th { text-align: start; font-size: 0.74rem; color: var(--faint); font-weight: 700; padding: 8px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+      tbody td { padding: 14px 12px; font-size: 0.86rem; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+      tbody tr:last-child td { border-bottom: none; }
+      tbody tr.clickable { cursor: pointer; transition: background 0.15s ease; }
+      tbody tr.clickable:hover { background: var(--surface-2); }
+      tbody tr.clickable:focus-visible { outline-offset: -2px; }
+      td:first-child, th:first-child { padding-inline-start: 4px; }
+      .proj-name { font-weight: 700; line-height: 1.5; }
+      .proj-team { font-size: 0.74rem; color: var(--muted); }
+      .status-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 700; padding: 3px 11px; border-radius: 20px; white-space: nowrap; }
+      .status-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+      .st-progress { background: var(--gold-dim); color: var(--c2); }
+      [data-theme="light"] .st-progress { color: #946100; }
+      .st-done { background: var(--up-dim); color: var(--up); }
+      .st-late { background: var(--down-dim); color: var(--down); }
+      .bar { height: 6px; border-radius: 6px; background: var(--surface-3); overflow: hidden; margin-top: 7px; min-width: 90px; }
+      .bar > i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.7s var(--ease); }
+      .due b { display: block; font-weight: 700; font-size: 0.84rem; }
+      .due span { font-size: 0.72rem; color: var(--muted); }
+      .due span.late { color: var(--down); font-weight: 700; }
+
+      /* clients */
+      .clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; }
+      .client-card { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line-soft); }
+      .client-card .avatar { width: 44px; height: 44px; border-radius: 13px; }
+      .client-card.new { animation: feedIn 0.7s var(--ease); }
+      .client-info b { display: block; font-size: 0.88rem; line-height: 1.45; }
+      .client-info span { font-size: 0.74rem; color: var(--muted); }
+      .client-val { text-align: end; }
+      .client-val b { display: block; font-size: 0.88rem; font-weight: 800; }
+      .client-val span { font-size: 0.7rem; color: var(--faint); }
+
+      /* teams */
+      .team-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      @container c (min-width: 960px) { .team-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
+      .team-row { padding: 14px 0; border-bottom: 1px solid var(--line-soft); }
+      .team-row:first-child { padding-top: 0; }
+      .team-row:last-child { border-bottom: none; padding-bottom: 0; }
+      .team-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .team-top b { font-size: 0.9rem; }
+      .team-meta { font-size: 0.74rem; color: var(--muted); margin-top: 6px; }
+
+      /* market page */
+      .mkt-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+      @container c (min-width: 1100px) { .mkt-grid { grid-template-columns: minmax(0, 1.9fr) minmax(320px, 1fr); } }
+      .mkt-side { display: grid; gap: 16px; align-content: start; }
+      .asset { display: flex; align-items: center; gap: 12px; }
+      .asset-code { width: 44px; height: 44px; border-radius: 13px; flex: none; display: grid; place-items: center; font-size: 0.72rem; font-weight: 800; background: var(--surface-3); color: var(--accent-ink); letter-spacing: 0.02em; }
+      .asset b { display: block; font-size: 0.9rem; line-height: 1.45; }
+      .asset span { font-size: 0.72rem; color: var(--muted); }
+      .px-cell b { font-size: 0.98rem; font-weight: 800; }
+      .px-cell small { font-size: 0.7rem; color: var(--faint); margin-inline-start: 4px; }
+      .range-cell { font-size: 0.78rem; color: var(--muted); line-height: 1.8; }
+      .spark-cell { width: 120px; height: 34px; }
+      .note { font-size: 0.74rem; color: var(--faint); line-height: 1.8; margin-top: 14px; }
+
+      .field { display: grid; gap: 6px; }
+      .field label { font-size: 0.76rem; color: var(--muted); font-weight: 600; }
+      .field input, .field select {
+        background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 0 12px; height: 44px;
+        color: var(--text); font-size: 0.9rem; outline: none; width: 100%; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .field input:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+      .conv-out { margin-top: 14px; padding: 16px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px dashed var(--line); text-align: center; }
+      .conv-out b { display: block; font-size: 1.5rem; font-weight: 800; line-height: 1.4; }
+      .conv-out span { font-size: 0.76rem; color: var(--muted); }
+      .res-row { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line-soft); font-size: 0.86rem; }
+      .res-row span { color: var(--muted); }
+      .res-row b { font-weight: 700; }
+      .res-total { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+      .res-total b { font-size: 1.3rem; font-weight: 800; }
+
+      /* settings */
+      .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 16px; align-items: start; }
+      .settings-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 2px; }
+      .settings-card p.desc { font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; }
+      .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line-soft); }
+      .setting-row.block { display: block; }
+      .setting-label b { font-size: 0.88rem; display: block; line-height: 1.5; }
+      .setting-label span { font-size: 0.74rem; color: var(--muted); }
+      .switch { width: 48px; height: 28px; border-radius: 20px; background: var(--surface-3); border: 1px solid var(--line); position: relative; flex: none; transition: background 0.2s ease; padding: 0; }
+      .switch::after { content: ""; position: absolute; top: 3px; inset-inline-start: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: transform 0.22s var(--ease); }
+      .switch[aria-checked="true"] { background: var(--accent); border-color: var(--accent); }
+      [dir="rtl"] .switch[aria-checked="true"]::after { transform: translateX(-20px); }
+      .theme-row { display: flex; gap: 10px; margin-top: 10px; }
+      .theme-opt { flex: 1; display: grid; justify-items: center; gap: 6px; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 14px; background: var(--surface-2); font-size: 0.8rem; font-weight: 700; color: var(--muted); transition: all 0.15s ease; }
+      .theme-opt.active { border-color: var(--accent); background: var(--accent-dim); color: var(--accent-ink); }
+      .accent-row { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+      .accent-swatch { width: 40px; height: 40px; border-radius: 50%; border: 3px solid transparent; box-shadow: inset 0 0 0 2px var(--surface); position: relative; }
+      .accent-swatch.active { border-color: var(--text); }
+      .fs-row { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+      .fs-btn { width: 40px; height: 40px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface-2); font-weight: 800; font-size: 1.1rem; display: grid; place-items: center; }
+      .fs-btn:hover { background: var(--surface-3); }
+      .fs-preview { flex: 1; text-align: center; font-weight: 800; }
+      .profile-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+      .profile-head .avatar { width: 60px; height: 60px; border-radius: 18px; font-size: 1.2rem; }
+      .profile-form { display: grid; gap: 12px; }
+
+      /* toast / panels / sheets */
+      .toast {
+        position: fixed; bottom: 26px; inset-inline: 0; margin-inline: auto; width: max-content; max-width: calc(100vw - 32px);
+        transform: translateY(20px); opacity: 0; pointer-events: none; z-index: 100;
+        background: var(--surface-3); border: 1px solid var(--line); color: var(--text);
+        padding: 12px 20px; border-radius: var(--r-sm); font-size: 0.84rem; font-weight: 700; box-shadow: var(--shadow);
+        display: flex; align-items: center; gap: 9px; transition: all 0.28s var(--ease);
+      }
+      .toast.show { opacity: 1; transform: none; }
+      .toast .icon { color: var(--accent-ink); width: 17px; height: 17px; }
+
+      .pop {
+        position: fixed; z-index: 70; width: 380px; max-width: calc(100vw - 24px);
+        top: calc(var(--top-h) + env(safe-area-inset-top, 0px) + 6px); inset-inline-end: 28px;
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow); overflow: hidden;
+        opacity: 0; transform: translateY(-8px) scale(0.98); pointer-events: none; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+      }
+      .pop.show { opacity: 1; transform: none; pointer-events: auto; }
+      .pop-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--line-soft); }
+      .pop-head b { font-size: 0.92rem; }
+      .pop-head button { background: none; border: none; color: var(--accent-ink); font-size: 0.74rem; font-weight: 700; }
+      .pop-body { max-height: 380px; overflow-y: auto; }
+      .notif-item { display: flex; gap: 12px; padding: 13px 16px; border-bottom: 1px solid var(--line-soft); position: relative; cursor: pointer; transition: background 0.15s ease; }
+      .notif-item:hover { background: var(--surface-2); }
+      .notif-item:last-child { border-bottom: none; }
+      .notif-item.unread::after { content: ""; position: absolute; inset-inline-end: 12px; top: 18px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+      .notif-ico { width: 38px; height: 38px; border-radius: 11px; flex: none; display: grid; place-items: center; }
+      .notif-txt b { font-size: 0.84rem; display: block; line-height: 1.5; }
+      .notif-txt p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+      .notif-txt span { font-size: 0.7rem; color: var(--faint); }
+      .empty { padding: 34px 20px; text-align: center; color: var(--faint); font-size: 0.84rem; }
+      .desktop-results { position: absolute; top: calc(100% + 8px); inset-inline: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow); max-height: 360px; overflow-y: auto; opacity: 0; transform: translateY(-6px); pointer-events: none; transition: all 0.15s ease; z-index: 35; color: var(--text); }
+      .desktop-results.show { opacity: 1; transform: none; pointer-events: auto; }
+      .res-group { font-size: 0.7rem; font-weight: 700; color: var(--faint); padding: 12px 16px 4px; }
+      .res-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; cursor: pointer; }
+      .res-item:hover, .res-item:active { background: var(--surface-2); }
+      .res-ico { width: 36px; height: 36px; border-radius: 10px; background: var(--surface-2); display: grid; place-items: center; color: var(--accent-ink); flex: none; }
+      .res-item:hover .res-ico { background: var(--surface-3); }
+      .res-txt b { font-size: 0.86rem; display: block; line-height: 1.5; }
+      .res-txt span { font-size: 0.72rem; color: var(--muted); }
+
+      .search-overlay { position: fixed; inset: 0; z-index: 80; background: var(--bg); display: flex; flex-direction: column; transform: translateY(-100%); transition: transform 0.3s var(--ease); padding-top: env(safe-area-inset-top, 0px); visibility: hidden; }
+      .search-overlay.show { transform: none; visibility: visible; }
+      .so-top { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line-soft); }
+      .so-top .search-box { width: auto; flex: 1; }
+      .so-results { flex: 1; overflow-y: auto; padding: 6px 0; }
+
+      .sheet { position: fixed; inset: 0; z-index: 90; pointer-events: none; }
+      .sheet.show { pointer-events: auto; }
+      .sheet-panel {
+        position: absolute; bottom: 0; inset-inline: 0; background: var(--surface); border: 1px solid var(--line); border-bottom: none;
+        border-radius: var(--r-lg) var(--r-lg) 0 0; padding: 10px 22px calc(26px + env(safe-area-inset-bottom, 0px));
+        transform: translateY(105%); transition: transform 0.34s var(--ease); max-height: 86vh; overflow-y: auto;
+      }
+      .sheet.show .sheet-panel { transform: none; }
+      .sheet-handle { width: 42px; height: 4px; background: var(--line); border-radius: 4px; margin: 8px auto 16px; }
+      .sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+      .sheet-title { font-size: 1.1rem; font-weight: 800; line-height: 1.5; }
+      .sheet-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 16px; }
+      .sheet-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line-soft); font-size: 0.88rem; }
+      .sheet-row:last-child { border-bottom: none; }
+      .sheet-row span:first-child { color: var(--muted); }
+      .sheet-row span:last-child { font-weight: 700; text-align: end; }
+      .more-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+      .more-item { display: flex; align-items: center; gap: 10px; padding: 15px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line); font-size: 0.88rem; font-weight: 700; text-align: start; }
+      .more-item .icon { color: var(--accent-ink); }
+
+      .bottom-nav {
+        display: none; position: fixed; bottom: 0; inset-inline: 0; z-index: 50;
+        background: color-mix(in srgb, var(--surface) 90%, transparent); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3);
+        border-top: 1px solid var(--line); padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px)); gap: 2px;
+      }
+      .bn-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 2px; border-radius: 14px; color: var(--faint); background: none; border: none; transition: color 0.15s ease, background 0.15s ease; }
+      .bn-item .icon { width: 22px; height: 22px; }
+      .bn-item span { font-size: 0.68rem; font-weight: 700; }
+      .bn-item.active { color: var(--accent-ink); background: var(--accent-dim); }
+
+      /* floating portfolio badge from the original project */
+      .mmd-home-badge { position: fixed; left: 14px; bottom: 14px; z-index: 99999; display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; background: rgba(14, 18, 25, 0.82); color: #e8eef5; font: 500 13px/1 system-ui, -apple-system, "Segoe UI", Vazirmatn, sans-serif; text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28); transition: background 0.18s ease, transform 0.18s ease; }
+      .mmd-home-badge:hover { background: rgba(20, 26, 36, 0.95); transform: translateY(-1px); }
+      .mmd-home-badge:focus-visible { outline: 2px solid #4fd1c5; outline-offset: 3px; }
+      [dir="rtl"] .mmd-home-badge { left: auto; right: 14px; }
+      @media print { .mmd-home-badge { display: none; } }
+
+      /* =====================================================================
+         RESPONSIVE — شل: سایدبار کامل ← ریل آیکونی (تبلت) ← نوار پایین (موبایل)
+         ===================================================================== */
+      @media (min-width: 761px) and (max-width: 1099px) {
+        .sidebar { width: var(--rail-w); padding: 16px 12px; align-items: center; }
+        .brand { padding: 4px 0 16px; }
+        .brand-text, .nav-label, .nav-item .lbl, .nav-item .badge, .sys-status span, .mini-profile > div:not(.avatar) { display: none; }
+        .nav-item { width: 52px; height: 48px; justify-content: center; padding: 0; }
+        .nav-item.active::before { inset-inline-start: -12px; }
+        .nav-label + .nav-item { margin-top: 0; }
+        .sys-status { justify-content: center; padding: 10px; }
+        .mini-profile { padding: 6px; justify-content: center; width: auto; }
+        .topbar { padding-inline: 20px; }
+        .search-box { width: min(260px, 32vw); }
+        .kbd, .clock-pill { display: none; }
+        .content { padding: 22px 20px 36px; }
+      }
+      @media (max-width: 760px) {
+        .sidebar { display: none; }
+        .bottom-nav { display: flex; }
+        .topbar { padding-inline: 14px; gap: 10px; }
+        .search-box.desk, .clock-pill, .kbd { display: none; }
+        .mobile-only { display: grid; }
+        .page-title { font-size: 1.08rem; }
+        .page-sub { display: none; }
+        .content { padding: 14px 14px calc(var(--bar-h) + 30px + env(safe-area-inset-bottom, 0px)); }
+        .pop { inset-inline: 12px; width: auto; max-width: none; }
+        .mmd-home-badge { bottom: calc(var(--bar-h) + 14px + env(safe-area-inset-bottom, 0px)); }
+        .toast { bottom: calc(var(--bar-h) + 22px + env(safe-area-inset-bottom, 0px)); }
+        .panel { padding: 16px; border-radius: 16px; }
+        .hero { border-radius: 22px; }
+        .hero-main { padding: 20px 18px 14px; }
+        .hero-side { padding: 18px; }
+        .goal { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; }
+        .ring { width: 96px; height: 96px; }
+        .ring-c { font-size: 1.3rem; }
+        .chart-box { height: 250px; }
+        .stats3 { gap: 8px; }
+        .stat b { font-size: 0.98rem; }
+        .tbl-wrap { margin: 0 -16px -8px; padding: 0 16px 8px; }
+        .feed-list { max-height: 360px; }
+      }
+      @media (min-width: 761px) {
+        .sheet-panel {
+          inset-inline: auto; bottom: auto; top: 50%; left: 50%; width: min(540px, calc(100vw - 32px));
+          border: 1px solid var(--line); border-radius: var(--r-lg); padding-bottom: 26px;
+          transform: translate(-50%, -46%) scale(0.97); opacity: 0; transition: transform 0.3s var(--ease), opacity 0.25s ease;
+        }
+        .sheet.show .sheet-panel { transform: translate(-50%, -50%); opacity: 1; }
+        .sheet-handle { display: none; }
+      }
+
+      /* جدول‌ها روی عرض‌های باریک به کارت تبدیل می‌شوند */
+      @container c (max-width: 700px) {
+        .tbl-wrap { overflow: visible; }
+        table.stack thead { display: none; }
+        table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+        table.stack tbody tr { border: 1px solid var(--line-soft); background: var(--surface-2); border-radius: var(--r-sm); margin-bottom: 10px; padding: 8px 12px; }
+        table.stack tbody td { border: none; padding: 7px 0; display: flex; justify-content: space-between; align-items: center; gap: 14px; text-align: end; }
+        table.stack tbody td::before { content: attr(data-label); font-size: 0.72rem; color: var(--faint); font-weight: 700; flex: none; }
+        table.stack tbody td:first-child { display: block; text-align: start; padding-top: 8px; }
+        table.stack tbody td:first-child::before { display: none; }
+        table.stack .bar { min-width: 120px; flex: 1; margin-top: 0; }
+        table.stack td.prog { display: grid; grid-template-columns: auto 1fr; }
+        table.stack td.prog::before { grid-column: 1 / -1; }
+        .spark-cell { width: 110px; }
+      }
+      @media print {
+        .sidebar, .topbar, .bottom-nav, .hero-lattice { display: none !important; }
+        body::before { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="mmd-home-badge" href="https://mmd-ai.com/index-fa.html" title="بازگشت به وب‌سایت محمدرضا اسدپور"
+      ><span aria-hidden="true">&rarr;</span><span>Home</span></a
+    >
+    <h1 class="sr-only">مرکز فرماندهی مدیرعامل هلدینگ آریانا — نمونه‌کار محمدرضا اسدپور</h1>
+    <div class="backdrop" id="backdrop"></div>
+
+    <!-- آیکون‌ها -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.8"/></symbol>
+        <symbol id="i-activity" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+        <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+        <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+        <symbol id="i-brief" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+        <symbol id="i-userplus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></symbol>
+        <symbol id="i-bars" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+        <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+        <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+        <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+        <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+        <symbol id="i-up" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></symbol>
+        <symbol id="i-down" viewBox="0 0 24 24"><line x1="7" y1="7" x2="17" y2="17"/><polyline points="17 7 17 17 7 17"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+        <symbol id="i-warn" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+        <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
+        <symbol id="i-dollar" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+        <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+        <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol>
+      </defs>
+    </svg>
+
+    <div class="shell">
+      <!-- ============ SIDEBAR ============ -->
+      <aside class="sidebar" id="sidebar" aria-label="منوی اصلی">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
+              <rect x="9" y="9" width="22" height="22" rx="2.5" />
+              <rect x="9" y="9" width="22" height="22" rx="2.5" transform="rotate(45 20 20)" />
+              <circle cx="20" cy="20" r="3.2" fill="currentColor" stroke="none" />
+            </svg>
+          </div>
+          <div class="brand-text"><b>هلدینگ آریانا</b><span>مرکز فرماندهی مدیرعامل</span></div>
+        </div>
+
+        <div class="nav-label">نمای کلی</div>
+        <a class="nav-item active" data-page="dashboard" href="#dashboard" title="داشبورد"><svg class="icon"><use href="#i-grid"/></svg><span class="lbl">داشبورد</span></a>
+        <a class="nav-item" data-page="market" href="#market" title="بازار زنده"><svg class="icon"><use href="#i-activity"/></svg><span class="lbl">بازار زنده</span></a>
+        <a class="nav-item" data-page="sales" href="#sales" title="فروش"><svg class="icon"><use href="#i-trend"/></svg><span class="lbl">فروش</span></a>
+        <a class="nav-item" data-page="teams" href="#teams" title="عملکرد تیم‌ها"><svg class="icon"><use href="#i-users"/></svg><span class="lbl">عملکرد تیم‌ها</span></a>
+
+        <div class="nav-label">عملیات</div>
+        <a class="nav-item" data-page="projects" href="#projects" title="پروژه‌ها"><svg class="icon"><use href="#i-brief"/></svg><span class="lbl">پروژه‌ها</span><span class="badge num" id="projBadge">۷</span></a>
+        <a class="nav-item" data-page="clients" href="#clients" title="مشتریان جدید"><svg class="icon"><use href="#i-userplus"/></svg><span class="lbl">مشتریان جدید</span></a>
+
+        <div class="nav-label">مدیریت</div>
+        <a class="nav-item" data-page="reports" href="#reports" title="گزارش‌های مالی"><svg class="icon"><use href="#i-bars"/></svg><span class="lbl">گزارش‌های مالی</span></a>
+        <a class="nav-item" data-page="settings" href="#settings" title="تنظیمات"><svg class="icon"><use href="#i-cog"/></svg><span class="lbl">تنظیمات</span></a>
+
+        <div class="sidebar-foot">
+          <div class="sys-status" title="وضعیت سیستم"><i class="live-dot"></i><span>سیستم آنلاین · <b class="num" id="sysUpdated">—</b></span></div>
+          <button class="mini-profile" id="miniProfileBtn" type="button">
+            <div class="avatar" id="sidebarAvatar">مر</div>
+            <div><b id="sidebarName">مهندس رضایی</b><span id="sidebarRole">مدیرعامل</span></div>
+          </button>
+        </div>
+      </aside>
+
+      <div class="main">
+        <!-- ============ TOPBAR ============ -->
+        <header class="topbar">
+          <div class="top-title">
+            <div class="page-title" id="pageTitle">داشبورد مدیریتی</div>
+            <div class="page-sub" id="pageSub">—</div>
+          </div>
+          <div class="top-spacer"></div>
+          <div class="search-box desk" id="desktopSearchWrap">
+            <svg class="icon" style="width:17px;height:17px"><use href="#i-search"/></svg>
+            <input type="text" id="desktopSearchInput" placeholder="جستجو در پروژه‌ها، مشتریان، بازار…" autocomplete="off" aria-label="جستجو" />
+            <span class="kbd">Ctrl K</span>
+            <div class="desktop-results" id="desktopResults"></div>
+          </div>
+          <div class="clock-pill" title="ساعت تهران"><i class="live-dot"></i><span>تهران</span><b class="num" id="clockTime">—</b></div>
+          <div class="topbar-actions">
+            <button class="icon-btn mobile-only tappable" id="mobileSearchBtn" aria-label="جستجو" type="button"><svg class="icon"><use href="#i-search"/></svg></button>
+            <button class="icon-btn tappable" id="quickTheme" aria-label="تغییر حالت شب و روز" type="button"><svg class="icon" id="quickThemeIcon"><use href="#i-sun"/></svg></button>
+            <button class="icon-btn tappable" id="notifBtn" aria-label="اعلان‌ها" aria-haspopup="true" type="button"><svg class="icon"><use href="#i-bell"/></svg><span class="count num" id="notifCount">۳</span></button>
+          </div>
+        </header>
+
+        <main class="content" id="content">
+          <!-- ================= DASHBOARD ================= -->
+          <section class="page active" data-page="dashboard">
+            <section class="hero" aria-label="درآمد زنده امروز">
+              <svg class="hero-lattice" aria-hidden="true" focusable="false">
+                <defs>
+                  <pattern id="lat" width="64" height="64" patternUnits="userSpaceOnUse">
+                    <g fill="none" stroke="currentColor" stroke-width="1">
+                      <rect x="14" y="14" width="36" height="36" />
+                      <rect x="14" y="14" width="36" height="36" transform="rotate(45 32 32)" />
+                      <circle cx="32" cy="32" r="7" />
+                      <path d="M57.5 32H64M0 32H6.5M32 0V6.5M32 57.5V64" />
+                    </g>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#lat)" />
+              </svg>
+
+              <div class="hero-main">
+                <div class="hero-top">
+                  <div>
+                    <p class="hero-greet" id="heroGreet">—</p>
+                    <h2 class="hero-label">درآمد امروز <span class="live-pill"><i class="live-dot"></i>زنده</span></h2>
+                  </div>
+                  <div id="heroDelta"></div>
+                </div>
+                <div class="hero-figure">
+                  <span class="hero-num num" id="heroRev" aria-live="off">۰</span>
+                  <span class="hero-unit">میلیون تومان</span>
+                </div>
+                <p class="hero-fx num" id="heroFx"></p>
+                <div class="hero-chart"><canvas id="heroChart" aria-label="نمودار تجمعی درآمد امروز در مقایسه با دیروز" role="img"></canvas></div>
+                <div class="legend"><span><i style="background:var(--accent)"></i>امروز</span><span><i style="background:rgba(255,255,255,.4)"></i>دیروز</span><span>مقیاس: میلیارد تومان، ساعت تهران</span></div>
+              </div>
+
+              <div class="hero-side">
+                <div class="goal">
+                  <div class="ring" role="img" aria-label="درصد تحقق هدف روزانه">
+                    <svg viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="52" /><circle class="val" id="ringVal" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" /></svg>
+                    <div class="ring-c"><div><span class="num" id="ringPct">۰٪</span><small>تحقق هدف</small></div></div>
+                  </div>
+                  <div class="goal-list num">
+                    <div><span>هدف امروز</span><b id="goalTarget">—</b></div>
+                    <div><span>تا هدف مانده</span><b id="goalLeft">—</b></div>
+                    <div><span>پیش‌بینی پایان روز</span><b id="goalForecast">—</b></div>
+                  </div>
+                </div>
+                <div class="hero-rates">
+                  <div class="hero-rates-title"><span>نرخ لحظه‌ای بازار</span><a href="#market" data-go="market" style="color:var(--accent)">همه نرخ‌ها</a></div>
+                  <div id="heroRates"></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ribbon" id="kpiRibbon" aria-label="شاخص‌های کلیدی"></section>
+
+            <div class="bento">
+              <section class="panel b-fin">
+                <div class="panel-head">
+                  <div class="panel-title">روند مالی ۶ ماه اخیر<span class="panel-sub" id="finSub">—</span></div>
+                  <div class="seg-ctrl" id="finChips" role="group" aria-label="انتخاب شاخص">
+                    <button class="seg-btn active" data-metric="revenue" type="button">درآمد</button>
+                    <button class="seg-btn" data-metric="cost" type="button">هزینه</button>
+                    <button class="seg-btn" data-metric="profit" type="button">سود خالص</button>
+                  </div>
+                </div>
+                <div class="chart-box"><canvas id="finChart" role="img" aria-label="نمودار روند مالی شش ماه اخیر"></canvas></div>
+                <div class="stats3 num" id="finStats"></div>
+              </section>
+
+              <section class="panel b-feed">
+                <div class="panel-head">
+                  <div class="panel-title">جریان زنده<span class="panel-sub">سفارش‌ها و رویدادهای همین لحظه</span></div>
+                  <span class="live-pill"><i class="live-dot"></i>زنده</span>
+                </div>
+                <ul class="feed-list" id="feedList" aria-live="polite"></ul>
+              </section>
+
+              <section class="panel b-subs">
+                <div class="panel-head">
+                  <div class="panel-title">شرکت‌های زیرمجموعه<span class="panel-sub" id="subsSub">—</span></div>
+                </div>
+                <div class="share-bar" id="shareBar" aria-hidden="true"></div>
+                <div id="subsList"></div>
+              </section>
+
+              <section class="panel b-proj">
+                <div class="panel-head">
+                  <div class="panel-title">پروژه‌های نیازمند توجه<span class="panel-sub">روی هر ردیف بزنید تا جزئیات را ببینید</span></div>
+                  <a class="btn" href="#projects" data-go="projects">همه پروژه‌ها</a>
+                </div>
+                <div class="tbl-wrap">
+                  <table class="stack">
+                    <thead><tr><th>پروژه</th><th>وضعیت</th><th>پیشرفت</th><th>موعد</th></tr></thead>
+                    <tbody id="projectsTable"></tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="panel b-clients" style="grid-column: span 12">
+                <div class="panel-head">
+                  <div class="panel-title">مشتریان تازه<span class="panel-sub">آخرین قراردادهای ثبت‌شده</span></div>
+                  <a class="btn" href="#clients" data-go="clients">مشاهده همه</a>
+                </div>
+                <div class="clients-grid" id="clientsGrid"></div>
+              </section>
+            </div>
+          </section>
+
+          <!-- ================= MARKET ================= -->
+          <section class="page" data-page="market">
+            <div class="mkt-grid">
+              <section class="panel">
+                <div class="panel-head">
+                  <div class="panel-title">نرخ ارز، طلا و سکه<span class="panel-sub">بازار آزاد تهران — به تومان · آخرین تغییر <b class="num" id="mktUpdated">—</b></span></div>
+                  <span class="live-pill"><i class="live-dot"></i>زنده</span>
+                </div>
+                <div class="tbl-wrap">
+                  <table class="stack">
+                    <thead><tr><th>دارایی</th><th>قیمت (تومان)</th><th>تغییر نسبت به دیروز</th><th>بیشترین / کمترین امروز</th><th>روند امروز</th></tr></thead>
+                    <tbody id="mktBody"></tbody>
+                  </table>
+                </div>
+                <p class="note">نرخ‌های مرجع بر اساس بازار آزاد روز ۱۴ مهر ۱۴۰۵ تنظیم شده‌اند و نوسان لحظه‌ای بعد از آن در همین صفحه شبیه‌سازی می‌شود (هر نماد در فاصله‌های تصادفی چند ده‌ثانیه‌ای تا چند دقیقه‌ای). برای اتصال به منبع زنده، فقط تابع <code>tickMarket</code> باید با یک API جایگزین شود.</p>
+              </section>
+
+              <div class="mkt-side">
+                <section class="panel">
+                  <div class="panel-head"><div class="panel-title">ماشین‌حساب ارز<span class="panel-sub">با نرخ لحظه‌ای بازار</span></div></div>
+                  <div class="seg-ctrl" id="convDir" role="group" aria-label="جهت تبدیل" style="margin-bottom:14px">
+                    <button class="seg-btn active" data-dir="toFx" type="button">تومان به ارز</button>
+                    <button class="seg-btn" data-dir="toToman" type="button">ارز به تومان</button>
+                  </div>
+                  <div class="profile-form">
+                    <div class="field"><label for="convAmt">مبلغ</label><input id="convAmt" inputmode="decimal" value="100000000" autocomplete="off" /></div>
+                    <div class="field"><label for="convCur">ارز</label>
+                      <select id="convCur"><option value="usd">دلار آمریکا</option><option value="eur">یورو</option><option value="gbp">پوند انگلیس</option><option value="aed">درهم امارات</option><option value="usdt">تتر</option></select>
+                    </div>
+                  </div>
+                  <div class="conv-out" aria-live="polite"><b class="num" id="convOut">—</b><span id="convRate">—</span></div>
+                </section>
+                <section class="panel">
+                  <div class="panel-head"><div class="panel-title">ذخایر ارزی و طلای هلدینگ<span class="panel-sub">ارزش‌گذاری لحظه‌ای</span></div></div>
+                  <div id="reserves"></div>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= SALES ================= -->
+          <section class="page" data-page="sales">
+            <section class="ribbon r4" id="salesRibbon"></section>
+            <div class="bento">
+              <section class="panel" style="grid-column: span 12">
+                <div class="panel-head"><div class="panel-title">سفارش‌ها به تفکیک ماه<span class="panel-sub" id="salesSub">—</span></div></div>
+                <div class="chart-box"><canvas id="salesBar" role="img" aria-label="نمودار تعداد سفارش‌ها در شش ماه اخیر"></canvas></div>
+              </section>
+              <section class="panel" style="grid-column: span 12">
+                <div class="panel-head">
+                  <div class="panel-title">سفارش‌ها ساعت به ساعت — امروز<span class="panel-sub">ساعت‌های آینده بر اساس الگوی معمول روز هفته پیش‌بینی شده‌اند</span></div>
+                  <div class="legend"><span><i style="background:var(--accent)"></i>ثبت‌شده</span><span><i style="background:var(--c2)"></i>ساعت جاری</span><span><i style="background:color-mix(in srgb,var(--accent) 25%,transparent)"></i>پیش‌بینی</span></div>
+                </div>
+                <div class="chart-box sm"><canvas id="salesHour" role="img" aria-label="نمودار سفارش‌های ساعتی امروز"></canvas></div>
+              </section>
+            </div>
+          </section>
+
+          <!-- ================= TEAMS ================= -->
+          <section class="page" data-page="teams">
+            <div class="team-grid">
+              <section class="panel">
+                <div class="panel-head"><div class="panel-title">امتیاز عملکرد تیم‌ها<span class="panel-sub" id="teamsSub">از ۱۰۰</span></div></div>
+                <div class="chart-box"><canvas id="teamsChart" role="img" aria-label="نمودار امتیاز عملکرد تیم‌ها"></canvas></div>
+              </section>
+              <section class="panel">
+                <div class="panel-head"><div class="panel-title">جزئیات تیم‌ها<span class="panel-sub">تغییر نسبت به ماه قبل</span></div></div>
+                <div id="teamsDetail"></div>
+              </section>
+            </div>
+          </section>
+
+          <!-- ================= PROJECTS ================= -->
+          <section class="page" data-page="projects">
+            <section class="panel">
+              <div class="panel-head"><div class="panel-title">همه پروژه‌ها<span class="panel-sub" id="projSub">روی هر ردیف بزنید تا جزئیات را ببینید</span></div></div>
+              <div class="tbl-wrap">
+                <table class="stack">
+                  <thead><tr><th>پروژه</th><th>وضعیت</th><th>پیشرفت</th><th>موعد</th></tr></thead>
+                  <tbody id="projectsTableFull"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+
+          <!-- ================= CLIENTS ================= -->
+          <section class="page" data-page="clients">
+            <section class="panel">
+              <div class="panel-head"><div class="panel-title">مشتریان جدید<span class="panel-sub" id="clientsSub">—</span></div></div>
+              <div class="clients-grid" id="clientsGridFull"></div>
+            </section>
+          </section>
+
+          <!-- ================= REPORTS ================= -->
+          <section class="page" data-page="reports">
+            <div class="bento">
+              <section class="panel" style="grid-column: span 12">
+                <div class="panel-head">
+                  <div class="panel-title">گزارش جامع مالی<span class="panel-sub" id="repSub">—</span></div>
+                  <button class="btn primary" id="exportBtn" type="button"><svg class="icon"><use href="#i-download"/></svg>خروجی CSV</button>
+                </div>
+                <div class="chart-box"><canvas id="reportChart" role="img" aria-label="نمودار هزینه و سود خالص به تفکیک ماه"></canvas></div>
+                <div class="legend" style="margin-top:12px"><span><i style="background:var(--c4)"></i>هزینه</span><span><i style="background:var(--accent)"></i>سود خالص</span><span>مجموع هر ستون برابر با درآمد همان ماه است</span></div>
+              </section>
+              <section class="panel" style="grid-column: span 12">
+                <div class="panel-head"><div class="panel-title">جدول ماهانه<span class="panel-sub">ارقام به میلیارد تومان</span></div></div>
+                <div class="tbl-wrap">
+                  <table class="stack">
+                    <thead><tr><th>ماه</th><th>درآمد</th><th>هزینه</th><th>سود خالص</th><th>حاشیه سود</th></tr></thead>
+                    <tbody id="reportBody"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <!-- ================= SETTINGS ================= -->
+          <section class="page" data-page="settings">
+            <div class="settings-grid">
+              <section class="panel settings-card">
+                <h3>ظاهر برنامه</h3>
+                <p class="desc">حالت نمایش و رنگ اصلی پنل را شخصی‌سازی کنید.</p>
+                <div class="setting-row block">
+                  <div class="setting-label"><b>حالت نمایش</b><span>روشن یا تیره</span></div>
+                  <div class="theme-row">
+                    <button class="theme-opt" data-mode="light" type="button"><svg class="icon"><use href="#i-sun"/></svg>روشن</button>
+                    <button class="theme-opt" data-mode="dark" type="button"><svg class="icon"><use href="#i-moon"/></svg>تیره</button>
+                  </div>
+                </div>
+                <div class="setting-row block">
+                  <div class="setting-label"><b>رنگ اصلی</b><span>رنگ دکمه‌ها، نمودارها و تأکیدها</span></div>
+                  <div class="accent-row">
+                    <button class="accent-swatch tappable" data-accent="turquoise" style="background:#38d9c8" aria-label="فیروزه‌ای" type="button"></button>
+                    <button class="accent-swatch tappable" data-accent="violet" style="background:#9b8cff" aria-label="ارغوانی" type="button"></button>
+                    <button class="accent-swatch tappable" data-accent="ruby" style="background:#ff6b86" aria-label="یاقوتی" type="button"></button>
+                    <button class="accent-swatch tappable" data-accent="saffron" style="background:#f5b83d" aria-label="زعفرانی" type="button"></button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel settings-card">
+                <h3>نمایش و خوانایی</h3>
+                <p class="desc">اندازه نوشته‌ها و جلوه‌های بصری را تنظیم کنید.</p>
+                <div class="setting-row block">
+                  <div class="setting-label"><b>اندازه فونت</b><span>کوچک تا خیلی بزرگ</span></div>
+                  <div class="fs-row">
+                    <button class="fs-btn tappable" id="fsMinus" aria-label="کوچک‌تر" type="button">−</button>
+                    <span class="fs-preview" id="fsPreview">متوسط</span>
+                    <button class="fs-btn tappable" id="fsPlus" aria-label="بزرگ‌تر" type="button">+</button>
+                  </div>
+                </div>
+                <div class="setting-row"><div class="setting-label"><b>حرکت و انیمیشن</b><span>جلوه‌های بصری و نمایش تغییر قیمت‌ها</span></div><button class="switch tappable" role="switch" id="swAnim" aria-label="حرکت و انیمیشن" type="button"></button></div>
+                <div class="setting-row"><div class="setting-label"><b>ذخیره خودکار تنظیمات</b><span>حفظ تنظیمات بین بازدیدها</span></div><button class="switch tappable" role="switch" id="swAuto" aria-label="ذخیره خودکار" type="button"></button></div>
+              </section>
+
+              <section class="panel settings-card">
+                <h3>اعلان‌ها</h3>
+                <p class="desc">نحوه اطلاع‌رسانی رویدادهای مهم را مدیریت کنید.</p>
+                <div class="setting-row"><div class="setting-label"><b>اعلان ایمیلی</b><span>خلاصه روزانه عملکرد</span></div><button class="switch tappable" role="switch" data-notif="email" aria-label="اعلان ایمیلی" type="button"></button></div>
+                <div class="setting-row"><div class="setting-label"><b>اعلان پیامکی</b><span>هشدارهای فوری مالی</span></div><button class="switch tappable" role="switch" data-notif="sms" aria-label="اعلان پیامکی" type="button"></button></div>
+                <div class="setting-row"><div class="setting-label"><b>اعلان درون‌برنامه‌ای</b><span>نوتیفیکیشن آنی در پنل</span></div><button class="switch tappable" role="switch" data-notif="push" aria-label="اعلان درون‌برنامه‌ای" type="button"></button></div>
+                <div class="setting-row"><div class="setting-label"><b>گزارش هفتگی مدیران</b><span>ارسال هر دوشنبه صبح</span></div><button class="switch tappable" role="switch" data-notif="weekly" aria-label="گزارش هفتگی" type="button"></button></div>
+              </section>
+
+              <section class="panel settings-card">
+                <h3>اطلاعات حساب</h3>
+                <p class="desc">این اطلاعات در نوار کناری و سلام صفحه اصلی نمایش داده می‌شود.</p>
+                <div class="profile-head">
+                  <div class="avatar" id="settingsAvatar">مر</div>
+                  <div><div style="font-weight:800" id="settingsName">—</div><div style="font-size:.8rem;color:var(--muted)" id="settingsRole">—</div></div>
+                </div>
+                <div class="profile-form">
+                  <div class="field"><label for="profName">نام و نام‌خانوادگی</label><input type="text" id="profName" autocomplete="off" /></div>
+                  <div class="field"><label for="profRole">سمت سازمانی</label><input type="text" id="profRole" autocomplete="off" /></div>
+                  <div class="field"><label for="profLang">زبان پنل</label><select id="profLang" disabled><option>فارسی</option></select></div>
+                  <button class="btn primary tappable" id="saveProfileBtn" type="button" style="justify-content:center">ذخیره تغییرات</button>
+                </div>
+              </section>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- نوار پایین موبایل -->
+    <nav class="bottom-nav" id="bottomNav" aria-label="ناوبری سریع">
+      <button class="bn-item tappable active" data-page="dashboard" type="button"><svg class="icon"><use href="#i-grid"/></svg><span>داشبورد</span></button>
+      <button class="bn-item tappable" data-page="market" type="button"><svg class="icon"><use href="#i-activity"/></svg><span>بازار</span></button>
+      <button class="bn-item tappable" data-page="sales" type="button"><svg class="icon"><use href="#i-trend"/></svg><span>فروش</span></button>
+      <button class="bn-item tappable" data-page="projects" type="button"><svg class="icon"><use href="#i-brief"/></svg><span>پروژه‌ها</span></button>
+      <button class="bn-item tappable" id="moreBtn" type="button"><svg class="icon"><use href="#i-dots"/></svg><span>بیشتر</span></button>
+    </nav>
+
+    <div class="sheet" id="moreSheet" role="dialog" aria-modal="true" aria-label="بیشتر">
+      <div class="sheet-panel">
+        <div class="sheet-handle"></div>
+        <div class="sheet-head"><div class="sheet-title">بیشتر</div></div>
+        <div class="sheet-meta">دسترسی سریع به بقیه بخش‌ها</div>
+        <div class="more-grid">
+          <button class="more-item tappable" data-page="teams" type="button"><svg class="icon"><use href="#i-users"/></svg>عملکرد تیم‌ها</button>
+          <button class="more-item tappable" data-page="clients" type="button"><svg class="icon"><use href="#i-userplus"/></svg>مشتریان جدید</button>
+          <button class="more-item tappable" data-page="reports" type="button"><svg class="icon"><use href="#i-bars"/></svg>گزارش‌های مالی</button>
+          <button class="more-item tappable" data-page="settings" type="button"><svg class="icon"><use href="#i-cog"/></svg>تنظیمات</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet" id="projectSheet" role="dialog" aria-modal="true" aria-labelledby="pName">
+      <div class="sheet-panel">
+        <div class="sheet-handle"></div>
+        <div class="sheet-head">
+          <div class="sheet-title" id="pName">—</div>
+          <button class="icon-btn tappable" id="pClose" aria-label="بستن" type="button" style="width:36px;height:36px"><svg class="icon"><use href="#i-x"/></svg></button>
+        </div>
+        <div class="sheet-meta" id="pTeam">—</div>
+        <div class="bar" style="margin:0 0 14px"><i id="pBar" style="width:0%"></i></div>
+        <div class="sheet-row"><span>وضعیت</span><span id="pStatus">—</span></div>
+        <div class="sheet-row"><span>درصد پیشرفت</span><span class="num" id="pProg">—</span></div>
+        <div class="sheet-row"><span>موعد تحویل</span><span id="pDue">—</span></div>
+        <div class="sheet-row"><span>تیم مسئول</span><span id="pTeam2">—</span></div>
+        <div class="sheet-row"><span>سرپرست تیم</span><span id="pLead">—</span></div>
+      </div>
+    </div>
+
+    <div class="pop" id="notifPanel" role="dialog" aria-label="اعلان‌ها">
+      <div class="pop-head"><b>اعلان‌ها</b><button id="markAllReadBtn" type="button">خوانده‌شدن همه</button></div>
+      <div class="pop-body" id="notifList"></div>
+    </div>
+
+    <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="جستجو">
+      <div class="so-top">
+        <button class="icon-btn tappable" id="closeSearchBtn" aria-label="بستن جستجو" type="button"><svg class="icon"><use href="#i-x"/></svg></button>
+        <div class="search-box">
+          <svg class="icon" style="width:17px;height:17px"><use href="#i-search"/></svg>
+          <input type="text" id="mobileSearchInput" placeholder="جستجو در پروژه‌ها، مشتریان، بازار…" autocomplete="off" aria-label="جستجو" />
+        </div>
+      </div>
+      <div class="so-results" id="mobileResults"></div>
+    </div>
+
+    <div class="toast" id="toast" role="status"><svg class="icon"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
+    <script>
+      (function () {
+        "use strict";
+
+        /* =====================================================================
+           تنظیمات قابل‌تغییر برای توسعه‌دهنده
+           ===================================================================== */
+        const CONFIG = {
+          dailyOrders: 1880, // سفارش در یک روز عادی
+          avgOrderValue: 7.4e6, // میانگین ارزش سفارش (تومان)
+          marketTickMs: [15000, 110000], // فاصله تصادفی بین دو تغییر قیمت هر نماد
+          eventGapMs: [90000, 240000], // فاصله رویدادهای غیر سفارش در جریان زنده
+        };
+
+        /* =====================================================================
+           ابزارها
+           ===================================================================== */
+        const $ = (s, r = document) => r.querySelector(s);
+        const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+        const byId = (id) => document.getElementById(id);
+        const FA_D = "۰۱۲۳۴۵۶۷۸۹";
+        const toFaDigits = (s) => String(s).replace(/\d/g, (d) => FA_D[d]);
+        const toEnDigits = (s) =>
+          String(s)
+            .replace(/[۰-۹]/g, (d) => FA_D.indexOf(d))
+            .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+        const nfCache = {};
+        function fa(n, d = 0) {
+          if (!isFinite(n)) return "—";
+          const k = d;
+          nfCache[k] = nfCache[k] || new Intl.NumberFormat("fa-IR", { minimumFractionDigits: d, maximumFractionDigits: d });
+          return nfCache[k].format(Math.abs(n) < 0.5 * Math.pow(10, -d) ? 0 : n);
+        }
+        const pad2 = (n) => toFaDigits(String(n).padStart(2, "0"));
+        const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+        const rnd = (a, b) => a + Math.random() * (b - a);
+        function gauss(r = Math.random) {
+          let u = 0, v = 0;
+          while (!u) u = r();
+          while (!v) v = r();
+          return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+        }
+        function mulberry32(a) {
+          return function () {
+            a |= 0; a = (a + 0x6d2b79f5) | 0;
+            let t = Math.imul(a ^ (a >>> 15), 1 | a);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+          };
+        }
+        const norm = (s) => toEnDigits(s).replace(/ي/g, "ی").replace(/ك/g, "ک").replace(/\u200c/g, " ").toLowerCase();
+        const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+        function rgba(hex, a) {
+          hex = (hex || "").trim();
+          if (!/^#/.test(hex)) return hex || "rgba(56,217,200," + a + ")";
+          let v = hex.slice(1);
+          if (v.length === 3) v = v.split("").map((c) => c + c).join("");
+          const n = parseInt(v, 16);
+          return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+        }
+
+        /* =====================================================================
+           تاریخ و ساعت — تقویم شمسی با منطقه زمانی تهران
+           ===================================================================== */
+        const FA_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+        const FA_DOW = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"];
+        const dtf = new Intl.DateTimeFormat("en-US", {
+          timeZone: "Asia/Tehran", hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric",
+          hour: "numeric", minute: "numeric", second: "numeric",
+        });
+        function tehranNow() {
+          const p = {};
+          for (const x of dtf.formatToParts(new Date())) p[x.type] = +x.value;
+          return { y: p.year, m: p.month, d: p.day, h: p.hour % 24, mi: p.minute, s: p.second };
+        }
+        function g2j(gy, gm, gd) {
+          const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+          const gy2 = gm > 2 ? gy + 1 : gy;
+          let days = 355666 + 365 * gy + ~~((gy2 + 3) / 4) - ~~((gy2 + 99) / 100) + ~~((gy2 + 399) / 400) + gd + gdm[gm - 1];
+          let jy = -1595 + 33 * ~~(days / 12053);
+          days %= 12053;
+          jy += 4 * ~~(days / 1461);
+          days %= 1461;
+          if (days > 365) { jy += ~~((days - 1) / 365); days = (days - 1) % 365; }
+          const jm = days < 186 ? 1 + ~~(days / 31) : 7 + ~~((days - 186) / 30);
+          const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
+          return [jy, jm, jd];
+        }
+        let T = tehranNow();
+        const gShift = (n) => {
+          const dt = new Date(Date.UTC(T.y, T.m - 1, T.d + n));
+          return { y: dt.getUTCFullYear(), m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
+        };
+        const jShift = (n) => { const g = gShift(n); return g2j(g.y, g.m, g.d); };
+        const dowOf = (g) => new Date(Date.UTC(g.y, g.m - 1, g.d)).getUTCDay();
+        const dayKey = (g) => g.y * 10000 + g.m * 100 + g.d;
+        const JT = g2j(T.y, T.m, T.d);
+        const fmtJ = (j, withYear) => `${fa(j[2])} ${FA_MONTHS[j[1] - 1]}${withYear ? " " + toFaDigits(j[0]) : ""}`;
+        const todayLabel = () => `${FA_DOW[dowOf(gShift(0))]} ${fmtJ(JT, true)}`;
+        function lastMonths(n) {
+          const out = [];
+          const idx = JT[0] * 12 + (JT[1] - 1);
+          for (let k = n; k >= 1; k--) { const i = idx - k; out.push({ y: Math.floor(i / 12), m: i % 12 }); }
+          return out;
+        }
+        const nowHF = () => { const t = tehranNow(); return t.h + t.mi / 60 + t.s / 3600; };
+        function relTime(ms) {
+          const s = Math.max(0, (Date.now() - ms) / 1000);
+          if (s < 45) return "همین الان";
+          if (s < 3600) return `${fa(Math.round(s / 60) || 1)} دقیقه پیش`;
+          if (s < 86400) return `${fa(Math.round(s / 3600))} ساعت پیش`;
+          return `${fa(Math.round(s / 86400))} روز پیش`;
+        }
+        function relDays(off, status) {
+          if (status === "done") return "تحویل‌شده";
+          if (off < 0) return `${fa(-off)} روز تأخیر`;
+          if (off === 0) return "امروز";
+          if (off === 1) return "فردا";
+          return `${fa(off)} روز دیگر`;
+        }
+
+        /* =====================================================================
+           تنظیمات کاربر
+           ===================================================================== */
+        const SKEY = "ariana.settings.v1";
+        const S = { theme: "dark", accent: "turquoise", fontSize: 1, animations: true, autosave: true, name: "مهندس رضایی", role: "مدیرعامل", notif: { email: true, sms: false, push: true, weekly: true } };
+        try { const o = JSON.parse(localStorage.getItem(SKEY) || "{}"); Object.assign(S, o); S.notif = Object.assign({ email: true, sms: false, push: true, weekly: true }, o.notif || {}); } catch (e) {}
+        const FS_LABELS = ["کوچک", "متوسط", "بزرگ", "خیلی بزرگ"];
+        const FS_VALUES = [0.9, 1, 1.1, 1.22];
+        function persist() { if (!S.autosave) return; try { localStorage.setItem(SKEY, JSON.stringify(S)); } catch (e) {} }
+        function toast(msg) {
+          byId("toastMsg").textContent = msg;
+          const t = byId("toast");
+          t.classList.add("show");
+          clearTimeout(toast._t);
+          toast._t = setTimeout(() => t.classList.remove("show"), 2300);
+        }
+        function initials(name) {
+          const p = name.trim().split(/\s+/).filter(Boolean);
+          if (!p.length) return "؟";
+          if (p.length === 1) return p[0].slice(0, 2);
+          return p[0].slice(0, 1) + p[1].slice(0, 1);
+        }
+        function applySettings() {
+          const r = document.documentElement;
+          r.setAttribute("data-theme", S.theme);
+          r.setAttribute("data-accent", S.accent);
+          r.style.setProperty("--fs-scale", FS_VALUES[S.fontSize]);
+          document.body.classList.toggle("no-anim", !S.animations);
+          const m = $('meta[name="theme-color"]');
+          if (m) m.setAttribute("content", S.theme === "dark" ? "#050c20" : "#e8eef5");
+          $$(".theme-opt").forEach((b) => b.classList.toggle("active", b.dataset.mode === S.theme));
+          $$(".accent-swatch").forEach((b) => b.classList.toggle("active", b.dataset.accent === S.accent));
+          byId("fsPreview").textContent = FS_LABELS[S.fontSize];
+          byId("swAnim").setAttribute("aria-checked", String(S.animations));
+          byId("swAuto").setAttribute("aria-checked", String(S.autosave));
+          $$("[data-notif]").forEach((b) => b.setAttribute("aria-checked", String(!!S.notif[b.dataset.notif])));
+          byId("quickThemeIcon").innerHTML = `<use href="#${S.theme === "dark" ? "i-sun" : "i-moon"}"/>`;
+        }
+        function applyProfile() {
+          const ini = initials(S.name);
+          byId("sidebarAvatar").textContent = ini;
+          byId("settingsAvatar").textContent = ini;
+          byId("sidebarName").textContent = S.name;
+          byId("sidebarRole").textContent = S.role;
+          byId("settingsName").textContent = S.name;
+          byId("settingsRole").textContent = S.role;
+          byId("profName").value = S.name;
+          byId("profRole").value = S.role;
+          paintGreeting();
+        }
+        function paintGreeting() {
+          const h = tehranNow().h;
+          const g = h >= 5 && h < 12 ? "صبح بخیر" : h < 16 ? "ظهر بخیر" : h < 20 ? "عصر بخیر" : "شب بخیر";
+          byId("heroGreet").textContent = `${g}، ${S.name} — ${todayLabel()}`;
+        }
+
+        /* =====================================================================
+           داده‌ها
+           ===================================================================== */
+        const REVENUE = [318, 331, 349, 362, 391, 408]; // میلیارد تومان، شش ماه کامل اخیر
+        const COST_RATIO = [0.71, 0.7, 0.7, 0.69, 0.69, 0.68];
+        const TARGET = [320, 335, 350, 370, 385, 400];
+        const COST = REVENUE.map((r, i) => +(r * COST_RATIO[i]).toFixed(1));
+        const PROFIT = REVENUE.map((r, i) => +(r - COST[i]).toFixed(1));
+        const AOV_M = [6.95, 7.0, 7.1, 7.2, 7.3, 7.4];
+        const ORDERS_M = REVENUE.map((r, i) => Math.round((r * 1e9) / (AOV_M[i] * 1e6)));
+        const MONTHS = lastMonths(6);
+        const MONTH_NAMES = MONTHS.map((x) => FA_MONTHS[x.m]);
+        const LAST_M = MONTHS[5];
+        const MTD_MARGIN = 0.325;
+
+        const SUBS = [
+          { name: "آریانا تجارت", sector: "بازرگانی و پخش", share: 34, growth: 5.2, color: "var(--c1)" },
+          { name: "آریانا ساخت", sector: "ساختمان و عمران", share: 26, growth: 3.1, color: "var(--c2)" },
+          { name: "آریانا فناوری", sector: "نرم‌افزار و محصول دیجیتال", share: 18, growth: 9.8, color: "var(--c3)" },
+          { name: "آریانا لجستیک", sector: "حمل‌ونقل و انبارداری", share: 13, growth: -2.4, color: "var(--c5)" },
+          { name: "آریانا سرمایه", sector: "خدمات مالی و سرمایه‌گذاری", share: 9, growth: 6.7, color: "var(--c4)" },
+        ];
+        const TEAMS = [
+          { name: "فروش", score: 87, members: 14, lead: "خانم احمدی", d: 2 },
+          { name: "فنی و محصول", score: 92, members: 22, lead: "آقای کریمی", d: 3 },
+          { name: "بازاریابی", score: 78, members: 9, lead: "خانم موسوی", d: -1 },
+          { name: "پشتیبانی مشتریان", score: 95, members: 11, lead: "آقای صادقی", d: 1 },
+          { name: "مالی و اداری", score: 83, members: 7, lead: "خانم رستمی", d: 4 },
+        ];
+        const STAT = {
+          progress: { label: "در حال انجام", cls: "st-progress" },
+          done: { label: "تکمیل‌شده", cls: "st-done" },
+          late: { label: "در تأخیر", cls: "st-late" },
+        };
+        const PROJECTS = [
+          { id: "p1", name: "اپلیکیشن موبایل نسخه ۳", team: "فنی و محصول", status: "progress", progress: 68, off: 12 },
+          { id: "p2", name: "کمپین تبلیغاتی پاییزه", team: "بازاریابی", status: "late", progress: 40, off: -5 },
+          { id: "p3", name: "قرارداد تأمین‌کننده جدید", team: "مالی و اداری", status: "done", progress: 100, off: -14 },
+          { id: "p4", name: "پیاده‌سازی سیستم CRM جدید", team: "فروش", status: "progress", progress: 52, off: 35 },
+          { id: "p5", name: "بازطراحی مرکز پشتیبانی", team: "پشتیبانی مشتریان", status: "progress", progress: 75, off: 21 },
+          { id: "p6", name: "گسترش دفتر منطقه‌ای شیراز", team: "مالی و اداری", status: "late", progress: 22, off: -9 },
+          { id: "p7", name: "برنامه وفاداری مشتریان", team: "بازاریابی", status: "done", progress: 100, off: -40 },
+          { id: "p8", name: "ارتقای زیرساخت سرورها", team: "فنی و محصول", status: "progress", progress: 60, off: 48 },
+          { id: "p9", name: "داشبورد هوش تجاری مالی", team: "فنی و محصول", status: "progress", progress: 35, off: 26 },
+          { id: "p10", name: "ممیزی مالی نیمه اول سال", team: "مالی و اداری", status: "done", progress: 100, off: -3 },
+        ];
+        const CLIENTS = [
+          { name: "شرکت پیشگامان تجارت", person: "آقای نوری", ago: 1, value: "۴۲۰ میلیون" },
+          { name: "گروه صنعتی البرز", person: "خانم کاظمی", ago: 3, value: "۹۸۰ میلیون" },
+          { name: "فروشگاه‌های زنجیره‌ای رویا", person: "آقای همتی", ago: 6, value: "۲۱۰ میلیون" },
+          { name: "هلدینگ ساختمانی پارسیان", person: "خانم طاهری", ago: 9, value: "۱٫۲ میلیارد" },
+          { name: "استارتاپ فینتک نوین", person: "آقای عزیزی", ago: 14, value: "۳۵۰ میلیون" },
+          { name: "شرکت حمل‌ونقل تندرو", person: "خانم قاسمی", ago: 19, value: "۶۷۰ میلیون" },
+        ].map((c) => Object.assign(c, { at: Date.now() - c.ago * 86400000 }));
+        const CLIENT_POOL = [
+          ["گروه بازرگانی سپهر", "آقای رحیمی", "۵۳۰ میلیون"], ["شرکت آوای پارس", "خانم صالحی", "۲۸۰ میلیون"],
+          ["هلدینگ نیلوفر", "آقای جلالی", "۱٫۴ میلیارد"], ["صنایع غذایی گلشن", "خانم فرهادی", "۴۱۰ میلیون"],
+          ["شرکت مهندسی ایمن‌ساز", "آقای بهرامی", "۷۶۰ میلیون"], ["پخش دارویی رازی", "خانم نیک‌نام", "۳۹۰ میلیون"],
+        ];
+        let poolIdx = 0;
+
+        /* =====================================================================
+           مدل روزانه — الگوی ساعتی سفارش‌ها (مشترک بین امروز، دیروز و ماه جاری)
+           ===================================================================== */
+        const W = [0.8, 0.5, 0.3, 0.25, 0.25, 0.4, 1.0, 2.2, 4.0, 5.6, 6.8, 7.4, 7.2, 6.0, 5.6, 6.2, 6.8, 6.6, 6.0, 5.6, 5.8, 5.4, 3.8, 2.0];
+        const WS = W.reduce((a, b) => a + b, 0);
+        const wfOf = (g) => { const d = dowOf(g); return d === 5 ? 0.55 : d === 4 ? 0.82 : 1; }; // جمعه و پنجشنبه کم‌رونق‌ترند
+        function buildDay(g) {
+          const rng = mulberry32(dayKey(g) * 7 + 13);
+          const wf = wfOf(g);
+          const orders = [], rev = [];
+          for (let h = 0; h < 24; h++) {
+            const base = (CONFIG.dailyOrders * wf * W[h]) / WS;
+            const o = Math.max(0, Math.round(base * (1 + (rng() - 0.5) * 0.2)));
+            orders.push(o);
+            rev.push(o * CONFIG.avgOrderValue * (1 + (rng() - 0.5) * 0.12));
+          }
+          return { wf, orders, rev, goal: CONFIG.dailyOrders * CONFIG.avgOrderValue * wf };
+        }
+        const sum = (a) => a.reduce((x, y) => x + y, 0);
+        function cumAt(arr, hf) {
+          hf = clamp(hf, 0, 24);
+          const i = Math.min(23, Math.floor(hf));
+          let s = 0;
+          for (let k = 0; k < i; k++) s += arr[k];
+          return s + arr[i] * (hf - i);
+        }
+
+        const DAY = { today: null, yest: null, liveO: [], liveR: [], rev: 0, orders: 0, mtdPrev: 0, spark7: [] };
+        function initDay() {
+          T = tehranNow();
+          DAY.today = buildDay(gShift(0));
+          DAY.yest = buildDay(gShift(-1));
+          const hf = nowHF(), cur = Math.floor(hf), frac = hf - cur;
+          DAY.liveO = new Array(24).fill(0);
+          DAY.liveR = new Array(24).fill(0);
+          for (let h = 0; h < cur; h++) { DAY.liveO[h] = DAY.today.orders[h]; DAY.liveR[h] = DAY.today.rev[h]; }
+          DAY.liveO[cur] = Math.floor(DAY.today.orders[cur] * frac);
+          DAY.liveR[cur] = DAY.today.rev[cur] * frac;
+          DAY.rev = sum(DAY.liveR);
+          DAY.orders = sum(DAY.liveO);
+          let prev = 0;
+          for (let k = 1; k < JT[2]; k++) prev += sum(buildDay(gShift(-k)).rev);
+          DAY.mtdPrev = prev;
+          DAY.spark7 = [];
+          for (let k = 6; k >= 1; k--) DAY.spark7.push(sum(buildDay(gShift(-k)).orders));
+        }
+        initDay();
+        const seedRng = mulberry32(dayKey(gShift(0)) + 99);
+        const KPI_SEED = {
+          profitDelta: +(4 + seedRng() * 4).toFixed(1),
+          conv: Array.from({ length: 10 }, (_, i) => 31 + Math.sin(i) * 1.4 + seedRng()),
+          team: Array.from({ length: 10 }, (_, i) => 83 + i * 0.45 + seedRng() * 1.2),
+        };
+        let newClientsMTD = Math.floor((JT[2] - 1) * 1.65 + 2);
+        let orderNo = 18400 + Math.floor(DAY.orders * 1.0);
+
+        /* =====================================================================
+           بازار — نرخ مرجع ۱۴ مهر ۱۴۰۵ و نوسان لحظه‌ای
+           ===================================================================== */
+        const MK = [
+          { id: "usd", code: "USD", name: "دلار آمریکا", sub: "بازار آزاد", ref: 269520, prev: 268720, vol: 0.00065, step: 10 },
+          { id: "eur", code: "EUR", name: "یورو", sub: "بازار آزاد", ref: 304100, prev: 302400, vol: 0.0007, step: 10 },
+          { id: "gbp", code: "GBP", name: "پوند انگلیس", sub: "بازار آزاد", ref: 354700, prev: 352800, vol: 0.0008, step: 10 },
+          { id: "aed", code: "AED", name: "درهم امارات", sub: "بازار آزاد", ref: 73750, prev: 73470, vol: 0.0007, step: 10 },
+          { id: "usdt", code: "USDT", name: "تتر", sub: "ارز دیجیتال", ref: 268304, prev: 267900, vol: 0.0006, step: 10 },
+          { id: "gold18", code: "Au", name: "طلای ۱۸ عیار", sub: "هر گرم", ref: 26775000, prev: 26545000, vol: 0.0009, step: 1000 },
+          { id: "coin", code: "سکه", name: "سکه امامی", sub: "تمام‌سکه", ref: 274700000, prev: 271960000, vol: 0.0011, step: 10000 },
+        ];
+        const MKBY = {};
+        MK.forEach((m) => (MKBY[m.id] = m));
+        const MKEY = "ariana.market.v1";
+        const mDay = dayKey(gShift(0));
+        function seedHist(m) {
+          const r = mulberry32(mDay + m.id.length * 31 + m.ref);
+          const h = [m.ref];
+          for (let i = 0; i < 59; i++) h.unshift(Math.round((h[0] * (1 - gauss(r) * m.vol * 0.9 - ((m.ref - h[0]) / m.ref) * 0.04)) / m.step) * m.step);
+          return h;
+        }
+        (function initMarket() {
+          let saved = null;
+          try { saved = JSON.parse(localStorage.getItem(MKEY) || "null"); } catch (e) {}
+          const ok = saved && saved.day === mDay && Date.now() - saved.ts < 3 * 3600 * 1000;
+          MK.forEach((m) => {
+            const s = ok && saved.items && saved.items[m.id];
+            if (s) { m.price = s.price; m.hi = s.hi; m.lo = s.lo; m.hist = s.hist; }
+            else {
+              m.price = m.ref;
+              m.hist = seedHist(m);
+              m.hi = Math.max(m.ref, m.prev) * 1.0012;
+              m.lo = Math.min(m.ref, m.prev) * 0.9988;
+              m.hi = Math.max(m.hi, ...m.hist); m.lo = Math.min(m.lo, ...m.hist);
+            }
+            m.next = Date.now() + rnd(8000, 45000);
+          });
+        })();
+        function saveMarket() {
+          try {
+            const items = {};
+            MK.forEach((m) => (items[m.id] = { price: m.price, hi: m.hi, lo: m.lo, hist: m.hist }));
+            localStorage.setItem(MKEY, JSON.stringify({ day: mDay, ts: Date.now(), items }));
+          } catch (e) {}
+        }
+        let lastMarketChange = Date.now();
+        function tickMarket(m) {
+          // ← برای اتصال به API زنده، این تابع را با دریافت قیمت واقعی جایگزین کنید
+          const pull = ((m.ref - m.price) / m.ref) * 0.03;
+          let shock = gauss() * m.vol;
+          if (Math.random() < 0.08) shock *= 2.6;
+          let p = m.price * (1 + shock + pull);
+          p = clamp(p, m.ref * 0.975, m.ref * 1.025);
+          p = Math.round(p / m.step) * m.step;
+          if (p === m.price) p += (Math.random() < 0.5 ? -1 : 1) * m.step;
+          const dir = p > m.price ? "up" : "down";
+          m.price = p;
+          m.hi = Math.max(m.hi, p);
+          m.lo = Math.min(m.lo, p);
+          m.hist.push(p);
+          if (m.hist.length > 60) m.hist.shift();
+          lastMarketChange = Date.now();
+          paintMarket(m, dir);
+          saveMarket();
+        }
+
+        /* =====================================================================
+           ترسیم‌های کوچک
+           ===================================================================== */
+        function sparkSvg(v, cls, area) {
+          const w = 100, h = 30;
+          const mn = Math.min(...v), mx = Math.max(...v), r = mx - mn || 1;
+          const d = "M" + v.map((y, i) => ((i / (v.length - 1)) * w).toFixed(1) + " " + (h - 2 - ((y - mn) / r) * (h - 4)).toFixed(1)).join(" L");
+          return `<svg class="spark ${cls}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">${area ? `<path class="area" d="${d} L${w} ${h} L0 ${h}Z"/>` : ""}<path d="${d}"/></svg>`;
+        }
+        function dchip(v, d = 1, suffix = "٪", invert) {
+          const up = v >= 0;
+          const good = invert ? !up : up;
+          return `<span class="dchip ${Math.abs(v) < 0.005 ? "flat" : good ? "up" : "down"}"><svg class="icon"><use href="#${up ? "i-up" : "i-down"}"/></svg><span class="num">${fa(Math.abs(v), d)}${suffix}</span></span>`;
+        }
+        function tween(el, to, fmt) {
+          const from = el._v == null ? to : el._v;
+          el._v = to;
+          if (!S.animations || from === to || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = fmt(to); return; }
+          cancelAnimationFrame(el._raf);
+          const t0 = performance.now(), dur = 900;
+          const step = (t) => {
+            const k = clamp((t - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 3);
+            el.textContent = fmt(from + (to - from) * e);
+            if (k < 1) el._raf = requestAnimationFrame(step);
+          };
+          el._raf = requestAnimationFrame(step);
+        }
+        function flash(el, dir) {
+          if (!el || !S.animations) return;
+          el.classList.remove("tick-up", "tick-down");
+          void el.offsetWidth;
+          el.classList.add(dir === "up" ? "tick-up" : "tick-down");
+        }
+
+        /* =====================================================================
+           رندر بازار
+           ===================================================================== */
+        const HERO_RATES = ["usd", "eur", "gold18", "coin"];
+        function buildMarketUI() {
+          byId("heroRates").innerHTML = HERO_RATES.map((id) => {
+            const m = MKBY[id];
+            return `<div class="hr-row"><div class="hr-name"><b>${m.name}</b><span>${m.sub}</span></div><div class="hr-spark" data-sp="${id}"></div><div class="hr-px"><b class="px num" data-px="${id}"></b><small class="num" data-chgs="${id}"></small></div></div>`;
+          }).join("");
+          byId("mktBody").innerHTML = MK.map(
+            (m) => `<tr><td><div class="asset"><div class="asset-code">${m.code}</div><div><b>${m.name}</b><span>${m.sub}</span></div></div></td>
+            <td data-label="قیمت (تومان)" class="px-cell"><b class="px num" data-px="${m.id}"></b></td>
+            <td data-label="تغییر نسبت به دیروز"><span data-chg="${m.id}"></span></td>
+            <td data-label="بیشترین / کمترین" class="range-cell num"><span data-hl="${m.id}"></span></td>
+            <td data-label="روند امروز"><div class="spark-cell" data-sp="${m.id}"></div></td></tr>`
+          ).join("");
+          MK.forEach((m) => paintMarket(m, null));
+        }
+        function paintMarket(m, dir) {
+          const pct = (m.price / m.prev - 1) * 100;
+          const up = m.price >= m.prev;
+          $$(`[data-px="${m.id}"]`).forEach((el) => { el.textContent = fa(m.price); if (dir) flash(el, dir); });
+          $$(`[data-chg="${m.id}"]`).forEach((el) => { el.innerHTML = dchip(pct, 2) + `<span class="num" style="margin-inline-start:8px;font-size:.78rem;color:var(--muted)">${fa(Math.abs(m.price - m.prev))}</span>`; });
+          $$(`[data-chgs="${m.id}"]`).forEach((el) => { el.className = "num " + (up ? "up" : "down"); el.textContent = (up ? "▲ " : "▼ ") + fa(Math.abs(pct), 2) + "٪"; });
+          $$(`[data-hl="${m.id}"]`).forEach((el) => { el.innerHTML = `${fa(m.hi)}<br>${fa(m.lo)}`; });
+          $$(`[data-sp="${m.id}"]`).forEach((el) => { el.innerHTML = sparkSvg(m.hist, up ? "up" : "down", true); });
+          if (dir) {
+            byId("mktUpdated").textContent = `${pad2(tehranNow().h)}:${pad2(tehranNow().mi)}:${pad2(tehranNow().s)}`;
+            byId("sysUpdated").textContent = `${pad2(tehranNow().h)}:${pad2(tehranNow().mi)}`;
+          }
+          if (m.id === "usd" || m.id === "eur" || m.id === "coin") paintReserves();
+          if (m.id === "usd") paintHeroFx();
+          convert();
+        }
+        const RES = [
+          { id: "usd", label: "دلار آمریکا", qty: 180000, unit: "دلار" },
+          { id: "eur", label: "یورو", qty: 60000, unit: "یورو" },
+          { id: "coin", label: "سکه امامی", qty: 150, unit: "عدد" },
+        ];
+        function paintReserves() {
+          let total = 0, prevTotal = 0;
+          const rows = RES.map((r) => {
+            const m = MKBY[r.id];
+            const v = r.qty * m.price;
+            total += v;
+            prevTotal += r.qty * m.prev;
+            return `<div class="res-row"><span>${r.label} · ${fa(r.qty)} ${r.unit}</span><b class="num">${fa(v / 1e9, 1)} میلیارد</b></div>`;
+          }).join("");
+          byId("reserves").innerHTML = rows + `<div class="res-total"><div><span style="font-size:.76rem;color:var(--muted)">ارزش کل به تومان</span><b class="num" style="display:block">${fa(total / 1e9, 1)} میلیارد</b></div>${dchip((total / prevTotal - 1) * 100, 2)}</div>`;
+        }
+        function paintHeroFx() {
+          byId("heroFx").textContent = `معادل حدود ${fa(DAY.rev / MKBY.usd.price)} دلار با نرخ لحظه‌ای ${fa(MKBY.usd.price)} تومان`;
+        }
+        let convDir = "toFx";
+        function convert() {
+          const amt = parseFloat(toEnDigits(byId("convAmt").value).replace(/[٬,\s]/g, "")) || 0;
+          const m = MKBY[byId("convCur").value];
+          if (convDir === "toFx") byId("convOut").textContent = `${fa(amt / m.price, 2)} ${m.code}`;
+          else byId("convOut").textContent = `${fa(Math.round(amt * m.price))} تومان`;
+          byId("convRate").textContent = `هر ${m.name}: ${fa(m.price)} تومان`;
+        }
+
+        /* =====================================================================
+           رندر داشبورد
+           ===================================================================== */
+        function paintKpis() {
+          const hf = nowHF();
+          const yO = cumAt(DAY.yest.orders, hf);
+          const ordersD = yO > 20 ? (DAY.orders / yO - 1) * 100 : 0;
+          const mtd = DAY.mtdPrev + DAY.rev;
+          const mtdProfit = (mtd * MTD_MARGIN) / 1e9;
+          const active = PROJECTS.filter((p) => p.status !== "done");
+          const late = PROJECTS.filter((p) => p.status === "late").length;
+          const cnt = { progress: 0, done: 0, late: 0 };
+          PROJECTS.forEach((p) => cnt[p.status]++);
+          const avgTeam = Math.round(sum(TEAMS.map((t) => t.score)) / TEAMS.length);
+          const segs = [
+            ["سفارش‌های امروز", `<span class="px num" id="kOrdersV">${fa(DAY.orders)}</span>`, `${yO > 20 ? dchip(ordersD) : '<span class="dchip flat">—</span>'}<div class="seg-spark">${sparkSvg(DAY.spark7.concat([DAY.orders]), "accent", true)}</div>`],
+            ["سود خالص این ماه تا امروز", `${fa(mtdProfit, 1)}<small>میلیارد تومان</small>`, `${dchip(KPI_SEED.profitDelta)}<span style="font-size:.7rem;color:var(--faint)">نسبت به ماه قبل</span>`],
+            ["مشتریان جدید این ماه", `${fa(newClientsMTD)}`, `${dchip(15)}<span style="font-size:.7rem;color:var(--faint)">نسبت به ماه قبل</span>`],
+            ["پروژه‌های فعال", `${fa(active.length)}`, `<div style="width:100%"><div class="mini-stack" aria-hidden="true"><i style="flex:${cnt.done};background:var(--up)"></i><i style="flex:${cnt.progress};background:var(--c2)"></i><i style="flex:${cnt.late};background:var(--down)"></i></div><div style="font-size:.72rem;color:var(--muted);margin-top:6px">${late ? `<span style="color:var(--down);font-weight:700">${fa(late)} پروژه در تأخیر</span>` : "همه طبق برنامه"}</div></div>`],
+            ["میانگین عملکرد تیم‌ها", `${fa(avgTeam)}٪`, `${dchip(3)}<div class="seg-spark">${sparkSvg(KPI_SEED.team, "up", true)}</div>`],
+            ["نرخ تبدیل سرنخ‌ها", `${fa(31)}٪`, `${dchip(-1.1)}<div class="seg-spark">${sparkSvg(KPI_SEED.conv, "down", true)}</div>`],
+          ];
+          byId("kpiRibbon").innerHTML = segs.map(([l, v, f]) => `<div class="seg"><div class="seg-label">${l}</div><div class="seg-value num">${v}</div><div class="seg-foot">${f}</div></div>`).join("");
+          byId("projBadge").textContent = fa(active.length);
+        }
+        function paintHero(animate) {
+          const hf = nowHF();
+          const yRev = cumAt(DAY.yest.rev, hf);
+          const delta = byId("heroDelta");
+          delta.innerHTML = yRev > DAY.yest.goal * 0.02 ? `<span style="display:inline-flex;align-items:center;gap:8px">${dchip((DAY.rev / yRev - 1) * 100)}<span style="font-size:.78rem;color:var(--h-muted)">نسبت به همین ساعت دیروز</span></span>` : `<span style="font-size:.78rem;color:var(--h-muted)">مقایسه با دیروز بعد از ساعت‌های اولیه نمایش داده می‌شود</span>`;
+          const el = byId("heroRev");
+          const fmt = (v) => fa(Math.round(v / 1e6));
+          if (animate === false) { el._v = DAY.rev; el.textContent = fmt(DAY.rev); } else tween(el, DAY.rev, fmt);
+          paintHeroFx();
+          const goal = DAY.today.goal;
+          const pct = DAY.rev / goal;
+          const ring = byId("ringVal");
+          ring.style.strokeDashoffset = String(326.7 * (1 - clamp(pct, 0, 1)));
+          ring.classList.toggle("over", pct >= 1);
+          byId("ringPct").textContent = fa(pct * 100) + "٪";
+          byId("goalTarget").textContent = fa(Math.round(goal / 1e6)) + " م.ت";
+          byId("goalLeft").textContent = pct >= 1 ? "هدف محقق شد" : fa(Math.round((goal - DAY.rev) / 1e6)) + " م.ت";
+          const cum = cumAt(DAY.today.rev, hf);
+          const full = sum(DAY.today.rev);
+          const forecast = cum > full * 0.05 ? DAY.rev * (full / cum) : goal;
+          byId("goalForecast").textContent = fa(Math.round(forecast / 1e6)) + " م.ت";
+          if (charts.hero) { charts.hero.data.datasets[1].data = heroToday(); charts.hero.update("none"); }
+        }
+        function heroToday() {
+          const hf = nowHF(), cur = Math.floor(hf);
+          const pts = [];
+          let c = 0;
+          for (let h = 0; h <= cur; h++) { pts.push({ x: h, y: +(c / 1e9).toFixed(3) }); c += DAY.liveR[h]; }
+          pts.push({ x: hf, y: +(DAY.rev / 1e9).toFixed(3) });
+          return pts;
+        }
+        function heroYest() {
+          const pts = [];
+          let c = 0;
+          for (let h = 0; h <= 24; h++) { pts.push({ x: h, y: +(c / 1e9).toFixed(3) }); if (h < 24) c += DAY.yest.rev[h]; }
+          return pts;
+        }
+
+        function paintFinStats() {
+          const tr = sum(REVENUE), tp = sum(PROFIT);
+          byId("finSub").textContent = `${MONTH_NAMES[0]} تا ${MONTH_NAMES[5]} ${toFaDigits(LAST_M.y)} · میلیارد تومان`;
+          byId("finStats").innerHTML = `<div class="stat"><b>${fa(tr)}</b><span>جمع درآمد ۶ ماه</span></div><div class="stat"><b>${fa(tp, 1)}</b><span>جمع سود خالص</span></div><div class="stat"><b>${fa((tp / tr) * 100, 1)}٪</b><span>حاشیه سود</span></div>`;
+        }
+        function paintSubs() {
+          const rev = REVENUE[5];
+          byId("subsSub").textContent = `سهم از درآمد ${MONTH_NAMES[5]} · ${fa(rev)} میلیارد تومان`;
+          byId("shareBar").innerHTML = SUBS.map((s) => `<i style="flex:${s.share};background:${s.color}"></i>`).join("");
+          byId("subsList").innerHTML = SUBS.map(
+            (s) => `<div class="sub-row"><i class="sub-dot" style="background:${s.color}"></i><div class="sub-name"><b>${s.name}</b><span>${s.sector}</span></div><div class="sub-val num">${fa((rev * s.share) / 100, 1)} م.ت<small>${fa(s.share)}٪ سهم</small></div>${dchip(s.growth)}</div>`
+          ).join("");
+        }
+        const urgency = (p) => (p.status === "done" ? 1e6 + -p.off : p.status === "late" ? p.off - 1000 : p.off);
+        function projRow(p) {
+          const s = STAT[p.status];
+          const j = jShift(p.off);
+          const rel = relDays(p.off, p.status);
+          return `<tr class="clickable" tabindex="0" role="button" data-pid="${p.id}" aria-label="جزئیات ${p.name}">
+            <td><div class="proj-name">${p.name}</div><div class="proj-team">${p.team}</div></td>
+            <td data-label="وضعیت"><span class="status-badge ${s.cls}">${s.label}</span></td>
+            <td data-label="پیشرفت" class="prog" style="min-width:130px"><span class="num" style="font-weight:700">${fa(p.progress)}٪</span><div class="bar"><i style="width:${p.progress}%"></i></div></td>
+            <td data-label="موعد" class="due"><b class="num">${fmtJ(j)}</b><span class="${p.status === "late" ? "late" : ""}">${rel}</span></td></tr>`;
+        }
+        function paintProjects() {
+          const sorted = PROJECTS.slice().sort((a, b) => urgency(a) - urgency(b));
+          byId("projectsTable").innerHTML = sorted.slice(0, 5).map(projRow).join("");
+          byId("projectsTableFull").innerHTML = sorted.map(projRow).join("");
+          const a = PROJECTS.filter((p) => p.status !== "done").length;
+          byId("projSub").textContent = `${fa(a)} پروژه فعال از ${fa(PROJECTS.length)} پروژه · روی هر ردیف بزنید تا جزئیات را ببینید`;
+        }
+        let newestClient = false;
+        function clientCard(c, isNew) {
+          const day = Math.floor((Date.now() - c.at) / 86400000);
+          const g = gShift(-day);
+          const j = g2j(g.y, g.m, g.d);
+          return `<div class="client-card ${isNew ? "new" : ""}"><div class="avatar" aria-hidden="true">${c.name.trim().slice(0, 1)}</div><div class="client-info"><b>${c.name}</b><span>مسئول: ${c.person}</span></div><div class="client-val"><b class="num">${c.value}</b><span class="num">${day === 0 ? "امروز" : fmtJ(j)}</span></div></div>`;
+        }
+        function paintClients() {
+          byId("clientsGrid").innerHTML = CLIENTS.slice(0, 6).map((c, i) => clientCard(c, newestClient && i === 0)).join("");
+          byId("clientsGridFull").innerHTML = CLIENTS.map((c, i) => clientCard(c, newestClient && i === 0)).join("");
+          byId("clientsSub").textContent = `${fa(CLIENTS.length)} قرارداد اخیر · ${fa(newClientsMTD)} مشتری جدید در ${FA_MONTHS[JT[1] - 1]} ماه`;
+          newestClient = false;
+        }
+        function paintTeams() {
+          byId("teamsDetail").innerHTML = TEAMS.map(
+            (t) => `<div class="team-row"><div class="team-top"><b>${t.name}</b><span style="display:flex;gap:8px;align-items:center"><b class="num" style="color:var(--accent-ink)">${fa(t.score)}٪</b>${dchip(t.d, 0, "")}</span></div><div class="bar"><i style="width:${t.score}%"></i></div><div class="team-meta">${fa(t.members)} نفر عضو تیم · سرپرست: ${t.lead}</div></div>`
+          ).join("");
+          byId("teamsSub").textContent = `امتیاز عملکرد ${FA_MONTHS[JT[1] - 1]} از ۱۰۰`;
+        }
+        function paintSalesRibbon() {
+          const g = (REVENUE[5] / REVENUE[0] - 1) * 100;
+          const items = [
+            ["فروش ۶ ماه گذشته", `${fa(sum(REVENUE))}<small>میلیارد تومان</small>`, dchip(g) + '<span style="font-size:.7rem;color:var(--faint)">رشد نیم‌سال</span>'],
+            ["میانگین ارزش سفارش", `${fa(7.4, 1)}<small>میلیون تومان</small>`, dchip(4.2)],
+            ["نرخ تبدیل سرنخ‌ها", `${fa(31)}٪`, dchip(-1.1)],
+            ["مشتریان بازگشتی", `${fa(68)}٪`, dchip(5)],
+          ];
+          byId("salesRibbon").innerHTML = items.map(([l, v, f]) => `<div class="seg"><div class="seg-label">${l}</div><div class="seg-value num">${v}</div><div class="seg-foot">${f}</div></div>`).join("");
+          byId("salesSub").textContent = `${MONTH_NAMES[0]} تا ${MONTH_NAMES[5]} ${toFaDigits(LAST_M.y)}`;
+        }
+        function paintReports() {
+          byId("repSub").textContent = `${MONTH_NAMES[0]} تا ${MONTH_NAMES[5]} ${toFaDigits(LAST_M.y)} · درآمد، هزینه و سود خالص`;
+          byId("reportBody").innerHTML = REVENUE.map(
+            (r, i) => `<tr><td><b>${MONTH_NAMES[i]}</b></td><td data-label="درآمد" class="num">${fa(r, 1)}</td><td data-label="هزینه" class="num">${fa(COST[i], 1)}</td><td data-label="سود خالص" class="num" style="font-weight:800">${fa(PROFIT[i], 1)}</td><td data-label="حاشیه سود" class="num">${fa((PROFIT[i] / r) * 100, 1)}٪</td></tr>`
+          ).join("");
+        }
+        function exportCSV() {
+          const rows = [["ماه", "درآمد (میلیارد تومان)", "هزینه", "سود خالص", "حاشیه سود (درصد)"]];
+          REVENUE.forEach((r, i) => rows.push([MONTH_NAMES[i], r, COST[i], PROFIT[i], ((PROFIT[i] / r) * 100).toFixed(1)]));
+          const blob = new Blob(["\ufeff" + rows.map((r) => r.join(",")).join("\n")], { type: "text/csv;charset=utf-8" });
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = `ariana-financial-report-${JT[0]}-${String(JT[1]).padStart(2, "0")}.csv`;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+          toast("گزارش مالی دانلود شد");
+        }
+
+        /* =====================================================================
+           جریان زنده و اعلان‌ها
+           ===================================================================== */
+        const FEED = [];
+        const CHANNELS = ["فروشگاه آنلاین آریانا", "نمایندگی مشهد", "نمایندگی اصفهان", "نمایندگی تبریز", "نمایندگی شیراز", "پنل شرکتی", "نمایندگی تهران — ولیعصر", "نمایندگی کرج"];
+        const ICO = {
+          order: ["i-bag", "var(--accent-dim)", "var(--accent-ink)"],
+          pay: ["i-dollar", "var(--gold-dim)", "var(--c2)"],
+          client: ["i-userplus", "color-mix(in srgb,var(--c3) 18%,transparent)", "var(--c3)"],
+          project: ["i-flag", "color-mix(in srgb,var(--c5) 18%,transparent)", "var(--c5)"],
+        };
+        function pushFeed(ev, silent) {
+          FEED.unshift(ev);
+          if (FEED.length > 40) FEED.pop();
+          if (!silent) paintFeed(true);
+        }
+        function paintFeed(isNew) {
+          byId("feedList").innerHTML = FEED.slice(0, 14).map((e, i) => {
+            const ic = ICO[e.type];
+            return `<li class="feed-item ${isNew && i === 0 ? "new" : ""}"><div class="feed-ico" style="background:${ic[1]};color:${ic[2]}"><svg class="icon"><use href="#${ic[0]}"/></svg></div><div class="feed-txt"><b>${e.title}</b><span>${e.sub}</span></div><div class="feed-val num">${e.val || ""}<small>${relTime(e.at)}</small></div></li>`;
+          }).join("");
+        }
+        const fmtMoney = (v) => (v >= 1e9 ? fa(v / 1e9, 2) + " میلیارد" : v >= 1e6 ? fa(v / 1e6, v >= 1e8 ? 0 : 1) + " میلیون" : fa(Math.round(v / 1e3)) + " هزار");
+        function orderValue() {
+          if (Math.random() < 0.02) return rnd(30e6, 150e6);
+          return Math.exp(Math.log(4.2e6) + 0.75 * gauss());
+        }
+        function addOrder(at) {
+          const v = orderValue();
+          const h = tehranNow().h;
+          DAY.rev += v; DAY.orders++; DAY.liveO[h]++; DAY.liveR[h] += v;
+          orderNo++;
+          pushFeed({ type: "order", at: at || Date.now(), title: `سفارش #${toFaDigits(orderNo)}`, sub: CHANNELS[Math.floor(Math.random() * CHANNELS.length)], val: fmtMoney(v) + " ت" }, !!at);
+          if (!at) { paintHero(); paintKpis(); updateHourChart(); lastTouch(); }
+        }
+        function lastTouch() { byId("sysUpdated").textContent = `${pad2(tehranNow().h)}:${pad2(tehranNow().mi)}`; }
+        function orderGap() {
+          const hf = nowHF();
+          const perSec = (CONFIG.dailyOrders * DAY.today.wf * W[Math.floor(hf)]) / WS / 3600;
+          return clamp(-Math.log(1 - Math.random()) / Math.max(perSec, 1e-4), 6, 150) * 1000;
+        }
+        function orderLoop() { addOrder(); setTimeout(orderLoop, orderGap()); }
+        function eventLoop() {
+          const r = Math.random();
+          const now = Date.now();
+          if (r < 0.3) {
+            const p = CLIENT_POOL[poolIdx++ % CLIENT_POOL.length];
+            CLIENTS.unshift({ name: p[0], person: p[1], value: p[2], ago: 0, at: now });
+            newClientsMTD++;
+            newestClient = true;
+            pushFeed({ type: "client", at: now, title: "مشتری جدید ثبت شد", sub: p[0], val: p[2] });
+            addNotif({ type: "info", title: "مشتری جدید", body: `«${p[0]}» با ارزش ${p[2]} تومان پیوست.` });
+            paintClients(); paintKpis(); buildSearchIndex();
+          } else if (r < 0.7) {
+            const c = CLIENTS[Math.floor(Math.random() * Math.min(CLIENTS.length, 6))];
+            const v = rnd(60e6, 380e6);
+            pushFeed({ type: "pay", at: now, title: "پرداخت قسط دریافت شد", sub: c.name, val: fmtMoney(v) + " ت" });
+          } else {
+            const act = PROJECTS.filter((p) => p.status !== "done");
+            const p = act[Math.floor(Math.random() * act.length)];
+            p.progress = Math.min(99, p.progress + 1 + Math.floor(Math.random() * 3));
+            pushFeed({ type: "project", at: now, title: "به‌روزرسانی پروژه", sub: p.name, val: fa(p.progress) + "٪" });
+            paintProjects(); paintKpis();
+          }
+          lastTouch();
+          setTimeout(eventLoop, rnd(...CONFIG.eventGapMs));
+        }
+
+        const NOTIFS = [];
+        const NI = { success: ["i-check", "var(--up-dim)", "var(--up)"], warn: ["i-warn", "var(--down-dim)", "var(--down)"], info: ["i-info", "var(--gold-dim)", "var(--c2)"] };
+        function addNotif(n, ago) {
+          NOTIFS.unshift(Object.assign({ id: "n" + Math.random().toString(36).slice(2, 8), at: Date.now() - (ago || 0), unread: !ago }, n));
+          paintNotifs();
+        }
+        function paintNotifs() {
+          const unread = NOTIFS.filter((n) => n.unread).length;
+          const b = byId("notifCount");
+          b.style.display = unread ? "grid" : "none";
+          b.textContent = unread > 9 ? "۹+" : fa(unread);
+          byId("notifList").innerHTML = NOTIFS.length
+            ? NOTIFS.map((n) => { const ic = NI[n.type]; return `<div class="notif-item ${n.unread ? "unread" : ""}" data-nid="${n.id}"><div class="notif-ico" style="background:${ic[1]};color:${ic[2]}"><svg class="icon"><use href="#${ic[0]}"/></svg></div><div class="notif-txt"><b>${n.title}</b><p>${n.body}</p><span class="num">${relTime(n.at)}</span></div></div>`; }).join("")
+            : '<div class="empty">اعلان جدیدی وجود ندارد</div>';
+        }
+        function seedNotifs() {
+          const late = PROJECTS.filter((p) => p.status === "late").sort((a, b) => a.off - b.off);
+          const lp = late.find((p) => p.name.includes("کمپین")) || late[0];
+          const c = CLIENTS[3];
+          const H = 3600000;
+          addNotif({ type: "info", title: "مشتری جدید", body: `«${c.name}» با ارزش ${c.value} تومان پیوست.` }, 3 * H);
+          addNotif({ type: "warn", title: "پروژه در تأخیر", body: `«${lp.name}» ${fa(-lp.off)} روز از موعد عقب افتاده است.` }, 1 * H);
+          addNotif({ type: "success", title: `سود ${FA_MONTHS[LAST_M.m]} نهایی شد`, body: `سود خالص ${FA_MONTHS[LAST_M.m]} ${toFaDigits(LAST_M.y)} برابر ${fa(PROFIT[5], 1)} میلیارد تومان ثبت شد.` }, 0.2 * H);
+          NOTIFS.forEach((n) => (n.unread = true));
+          addNotif({ type: "success", title: "گزارش هفتگی آماده شد", body: "گزارش عملکرد هفته گذشته برای مطالعه آماده است." }, 26 * H);
+          NOTIFS[0].unread = false;
+          NOTIFS.sort((a, b) => b.at - a.at);
+          paintNotifs();
+        }
+
+        /* =====================================================================
+           نمودارها (Chart.js) — ساخت تنبل برای هر صفحه
+           ===================================================================== */
+        let charts = {};
+        const built = new Set();
+        let metric = "revenue";
+        function tipOpts() {
+          return { rtl: true, textDirection: "rtl", backgroundColor: css("--surface-3"), titleColor: css("--text"), bodyColor: css("--muted"), borderColor: css("--line"), borderWidth: 1, padding: 12, cornerRadius: 12, displayColors: false, titleFont: { weight: 700 } };
+        }
+        const axisBase = () => ({ grid: { color: css("--grid") }, ticks: { color: css("--muted"), callback: (v) => fa(v) }, border: { display: false } });
+        const noGrid = () => ({ grid: { display: false }, ticks: { color: css("--muted") }, border: { display: false } });
+        function gradient(ctx, color, h, a) {
+          const g = ctx.getContext("2d").createLinearGradient(0, 0, 0, h);
+          g.addColorStop(0, rgba(color, a)); g.addColorStop(1, rgba(color, 0));
+          return g;
+        }
+        function mk(id, cfg) {
+          const el = byId(id);
+          if (!el || !window.Chart) return;
+          if (charts[id]) charts[id].destroy();
+          Chart.defaults.font.family = "Vazirmatn, system-ui, sans-serif";
+          Chart.defaults.font.size = 12;
+          Chart.defaults.animation = S.animations ? { duration: 700 } : false;
+          charts[id] = new Chart(el, cfg);
+          charts[id].__id = id;
+          if (id === "heroChart") charts.hero = charts[id];
+        }
+        function buildHero() {
+          const acc = css("--accent");
+          const el = byId("heroChart");
+          if (!el) return;
+          mk("heroChart", {
+            type: "line",
+            data: { datasets: [
+              { label: "دیروز", data: heroYest(), borderColor: "rgba(255,255,255,.38)", borderDash: [5, 5], borderWidth: 1.6, pointRadius: 0, tension: 0.35, fill: false },
+              { label: "امروز", data: heroToday(), borderColor: acc, backgroundColor: gradient(el, acc, 200, 0.4), borderWidth: 3, tension: 0.3, fill: true, pointRadius: (c) => (c.dataIndex === c.dataset.data.length - 1 ? 5 : 0), pointBackgroundColor: acc, pointBorderColor: "#fff", pointBorderWidth: 2 },
+            ] },
+            options: {
+              responsive: true, maintainAspectRatio: false, parsing: false, interaction: { intersect: false, mode: "nearest", axis: "x" },
+              plugins: { legend: { display: false }, tooltip: Object.assign(tipOpts(), { callbacks: { title: (i) => `ساعت ${fa(Math.floor(i[0].parsed.x))}:${pad2(Math.floor((i[0].parsed.x % 1) * 60))}`, label: (i) => `${i.dataset.label}: ${fa(i.parsed.y, 2)} میلیارد تومان` } }) },
+              scales: {
+                x: { type: "linear", min: 0, max: 24, grid: { display: false }, border: { display: false }, ticks: { stepSize: 3, color: "#a9b7e6", callback: (v) => fa(v) + ":۰۰" } },
+                y: { beginAtZero: true, grid: { color: "rgba(160,190,255,.12)" }, border: { display: false }, ticks: { color: "#a9b7e6", maxTicksLimit: 4, callback: (v) => fa(v) } },
+              },
+            },
+          });
+        }
+        function buildFin() {
+          const el = byId("finChart");
+          if (!el) return;
+          const col = metric === "cost" ? css("--c4") : metric === "profit" ? css("--c2") : css("--accent");
+          const data = metric === "revenue" ? REVENUE : metric === "cost" ? COST : PROFIT;
+          const ds = [{ label: { revenue: "درآمد", cost: "هزینه", profit: "سود خالص" }[metric], data, borderColor: col, backgroundColor: gradient(el, col, 280, 0.32), borderWidth: 3, tension: 0.38, fill: true, pointRadius: 4.5, pointBackgroundColor: col, pointBorderColor: css("--surface"), pointBorderWidth: 2, pointHoverRadius: 7 }];
+          if (metric === "revenue") ds.push({ label: "هدف ماهانه", data: TARGET, borderColor: css("--faint"), borderDash: [6, 5], borderWidth: 1.6, pointRadius: 0, tension: 0.38, fill: false });
+          mk("finChart", {
+            type: "line",
+            data: { labels: MONTH_NAMES, datasets: ds },
+            options: {
+              responsive: true, maintainAspectRatio: false, interaction: { intersect: false, mode: "index" },
+              plugins: { legend: { display: false }, tooltip: Object.assign(tipOpts(), { displayColors: true, callbacks: { label: (i) => ` ${i.dataset.label}: ${fa(i.parsed.y, 1)} میلیارد تومان` } }) },
+              scales: { x: noGrid(), y: Object.assign(axisBase(), { position: "left" }) },
+            },
+          });
+        }
+        function buildSales() {
+          mk("salesBar", {
+            type: "bar",
+            data: { labels: MONTH_NAMES, datasets: [{ label: "تعداد سفارش", data: ORDERS_M, backgroundColor: ORDERS_M.map((_, i) => (i === 5 ? css("--accent") : rgba(css("--accent"), 0.45))), borderRadius: 10, maxBarThickness: 56 }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: Object.assign(tipOpts(), { callbacks: { label: (i) => ` ${fa(i.parsed.y)} سفارش` } }) }, scales: { x: noGrid(), y: axisBase() } },
+          });
+          mk("salesHour", { type: "bar", data: hourData(), options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: Object.assign(tipOpts(), { callbacks: { title: (i) => `ساعت ${i[0].label}`, label: (i) => ` ${fa(i.parsed.y)} سفارش` } }) }, scales: { x: Object.assign(noGrid(), { ticks: { color: css("--muted"), maxRotation: 0, autoSkip: true, maxTicksLimit: 12 } }), y: axisBase() } } });
+        }
+        function hourData() {
+          const cur = tehranNow().h;
+          const acc = css("--accent");
+          return {
+            labels: Array.from({ length: 24 }, (_, h) => fa(h)),
+            datasets: [{ label: "سفارش", data: Array.from({ length: 24 }, (_, h) => (h <= cur ? DAY.liveO[h] : DAY.today.orders[h])), backgroundColor: Array.from({ length: 24 }, (_, h) => (h < cur ? acc : h === cur ? css("--c2") : rgba(acc, 0.25))), borderRadius: 6, maxBarThickness: 26 }],
+          };
+        }
+        function updateHourChart() {
+          const c = charts.salesHour;
+          if (!c) return;
+          const d = hourData();
+          c.data.datasets[0].data = d.datasets[0].data;
+          c.data.datasets[0].backgroundColor = d.datasets[0].backgroundColor;
+          c.update("none");
+        }
+        function buildTeams() {
+          mk("teamsChart", {
+            type: "bar",
+            data: { labels: TEAMS.map((t) => t.name), datasets: [{ label: "امتیاز", data: TEAMS.map((t) => t.score), backgroundColor: TEAMS.map((_, i) => rgba(css(`--c${[1, 2, 3, 5, 4][i]}`), 0.85)), borderRadius: 10, maxBarThickness: 34 }] },
+            options: { indexAxis: "y", responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: Object.assign(tipOpts(), { callbacks: { label: (i) => ` ${fa(i.parsed.x)} از ۱۰۰` } }) }, scales: { x: Object.assign(axisBase(), { min: 0, max: 100 }), y: { grid: { display: false }, border: { display: false }, ticks: { color: css("--text") } } } },
+          });
+        }
+        function buildReport() {
+          mk("reportChart", {
+            type: "bar",
+            data: { labels: MONTH_NAMES, datasets: [
+              { label: "هزینه", data: COST, backgroundColor: rgba(css("--c4"), 0.8), borderRadius: 6, stack: "s", maxBarThickness: 60 },
+              { label: "سود خالص", data: PROFIT, backgroundColor: css("--accent"), borderRadius: 6, stack: "s", maxBarThickness: 60 },
+            ] },
+            options: { responsive: true, maintainAspectRatio: false, interaction: { mode: "index", intersect: false }, plugins: { legend: { display: false }, tooltip: Object.assign(tipOpts(), { displayColors: true, callbacks: { label: (i) => ` ${i.dataset.label}: ${fa(i.parsed.y, 1)} میلیارد`, footer: (items) => `درآمد: ${fa(sum(items.map((x) => x.parsed.y)), 1)} میلیارد` } }) }, scales: { x: Object.assign(noGrid(), { stacked: true }), y: Object.assign(axisBase(), { stacked: true }) } },
+          });
+        }
+        const BUILDERS = { dashboard: () => { buildHero(); buildFin(); }, sales: buildSales, teams: buildTeams, reports: buildReport };
+        function ensureCharts(page) {
+          if (!BUILDERS[page]) return;
+          if (!built.has(page)) { BUILDERS[page](); built.add(page); }
+          else Object.values(charts).forEach((c) => c && c.resize && c.resize());
+        }
+        function rebuildCharts() {
+          Object.values(charts).forEach((c) => c && c.destroy && c.destroy());
+          charts = {};
+          built.clear();
+          ensureCharts(currentPage);
+        }
+
+        /* =====================================================================
+           ناوبری
+           ===================================================================== */
+        const META = {
+          dashboard: ["داشبورد مدیریتی", () => `نمای کلی عملکرد هلدینگ — امروز، ${todayLabel()}`],
+          market: ["بازار زنده", () => "نرخ ارز، طلا و سکه — به تومان"],
+          sales: ["فروش", () => "تحلیل فروش و سفارش‌های ۶ ماه اخیر و امروز"],
+          teams: ["عملکرد تیم‌ها", () => "مقایسه عملکرد واحدهای سازمانی"],
+          projects: ["پروژه‌ها", () => "پیگیری وضعیت و موعد پروژه‌ها"],
+          clients: ["مشتریان جدید", () => "قراردادهای ثبت‌شده اخیر"],
+          reports: ["گزارش‌های مالی", () => "درآمد، هزینه و سود خالص"],
+          settings: ["تنظیمات", () => "شخصی‌سازی ظاهر و رفتار پنل"],
+        };
+        let currentPage = "dashboard";
+        function goToPage(name, noHash) {
+          if (!META[name]) name = "dashboard";
+          currentPage = name;
+          $$(".page").forEach((p) => p.classList.toggle("active", p.dataset.page === name));
+          $$(".nav-item").forEach((n) => { const on = n.dataset.page === name; n.classList.toggle("active", on); if (on) n.setAttribute("aria-current", "page"); else n.removeAttribute("aria-current"); });
+          $$(".bn-item[data-page]").forEach((n) => n.classList.toggle("active", n.dataset.page === name));
+          byId("moreBtn").classList.toggle("active", ["teams", "clients", "reports", "settings"].includes(name));
+          byId("pageTitle").textContent = META[name][0];
+          byId("pageSub").textContent = META[name][1]();
+          closeSheets();
+          closeNotif();
+          window.scrollTo({ top: 0 });
+          if (!noHash) try { history.replaceState(null, "", "#" + name); } catch (e) {}
+          setTimeout(() => ensureCharts(name), 30);
+        }
+        $$(".nav-item, .bn-item[data-page], .more-item[data-page], [data-go]").forEach((el) => {
+          el.addEventListener("click", (e) => { e.preventDefault(); goToPage(el.dataset.page || el.dataset.go); });
+        });
+        window.addEventListener("hashchange", () => goToPage(location.hash.slice(1), true));
+
+        /* ---- شیت‌ها و پنل‌ها ---- */
+        const backdrop = byId("backdrop");
+        let notifOpen = false;
+        function closeSheets() {
+          $$(".sheet").forEach((s) => s.classList.remove("show"));
+          if (!notifOpen) backdrop.classList.remove("show");
+        }
+        function openSheet(id) { closeNotif(); byId(id).classList.add("show"); backdrop.classList.add("show"); }
+        function openNotif() { notifOpen = true; byId("notifPanel").classList.add("show"); backdrop.classList.add("show"); }
+        function closeNotif() { notifOpen = false; byId("notifPanel").classList.remove("show"); if (!$(".sheet.show")) backdrop.classList.remove("show"); }
+        backdrop.addEventListener("click", () => { closeSheets(); closeNotif(); });
+        byId("moreBtn").addEventListener("click", () => openSheet("moreSheet"));
+        byId("notifBtn").addEventListener("click", (e) => { e.stopPropagation(); notifOpen ? closeNotif() : openNotif(); });
+        byId("markAllReadBtn").addEventListener("click", () => { NOTIFS.forEach((n) => (n.unread = false)); paintNotifs(); toast("همه اعلان‌ها خوانده شد"); });
+        byId("notifList").addEventListener("click", (e) => {
+          const it = e.target.closest(".notif-item");
+          const n = it && NOTIFS.find((x) => x.id === it.dataset.nid);
+          if (n && n.unread) { n.unread = false; paintNotifs(); }
+        });
+        function openProject(id) {
+          const p = PROJECTS.find((x) => x.id === id);
+          if (!p) return;
+          const t = TEAMS.find((x) => x.name === p.team);
+          const j = jShift(p.off);
+          byId("pName").textContent = p.name;
+          byId("pTeam").textContent = "تیم مسئول: " + p.team;
+          byId("pStatus").textContent = STAT[p.status].label;
+          byId("pProg").textContent = fa(p.progress) + "٪";
+          byId("pDue").textContent = `${FA_DOW[dowOf(gShift(p.off))]} ${fmtJ(j, true)} (${relDays(p.off, p.status)})`;
+          byId("pTeam2").textContent = p.team;
+          byId("pLead").textContent = t ? t.lead : "—";
+          byId("pBar").style.width = p.progress + "%";
+          openSheet("projectSheet");
+          setTimeout(() => byId("pClose").focus(), 300);
+        }
+        byId("pClose").addEventListener("click", closeSheets);
+        document.addEventListener("click", (e) => {
+          const tr = e.target.closest("tr[data-pid]");
+          if (tr) openProject(tr.dataset.pid);
+        });
+        document.addEventListener("keydown", (e) => {
+          if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches("tr[data-pid]")) { e.preventDefault(); openProject(e.target.dataset.pid); }
+        });
+
+        /* ---- جستجو ---- */
+        let searchIndex = [];
+        function buildSearchIndex() {
+          searchIndex = [];
+          PROJECTS.forEach((p) => searchIndex.push({ type: "پروژه", label: p.name, sub: p.team, page: "projects", icon: "i-brief" }));
+          CLIENTS.forEach((c) => searchIndex.push({ type: "مشتری", label: c.name, sub: c.person, page: "clients", icon: "i-user" }));
+          TEAMS.forEach((t) => searchIndex.push({ type: "تیم", label: t.name, sub: "سرپرست: " + t.lead, page: "teams", icon: "i-users" }));
+          SUBS.forEach((s) => searchIndex.push({ type: "زیرمجموعه", label: s.name, sub: s.sector, page: "dashboard", icon: "i-grid" }));
+          MK.forEach((m) => searchIndex.push({ type: "بازار", label: m.name, sub: m.sub, page: "market", icon: "i-activity" }));
+          Object.keys(META).forEach((k) => searchIndex.push({ type: "صفحه", label: META[k][0], sub: META[k][1](), page: k, icon: "i-search" }));
+        }
+        function runSearch(q) {
+          q = norm(q.trim());
+          if (!q) return [];
+          return searchIndex.filter((i) => norm(i.label).includes(q) || norm(i.sub || "").includes(q)).slice(0, 9);
+        }
+        function renderResults(box, res) {
+          if (!res.length) { box.innerHTML = '<div class="empty">چیزی پیدا نشد. نام پروژه، مشتری یا ارز را امتحان کنید.</div>'; return; }
+          const groups = {};
+          res.forEach((r) => (groups[r.type] = groups[r.type] || []).push(r));
+          box.innerHTML = Object.keys(groups).map((t) => `<div class="res-group">${t}</div>` + groups[t].map((r) => `<div class="res-item" role="button" tabindex="0" data-page="${r.page}"><div class="res-ico"><svg class="icon"><use href="#${r.icon}"/></svg></div><div class="res-txt"><b>${r.label}</b><span>${r.sub}</span></div></div>`).join("")).join("");
+        }
+        const dIn = byId("desktopSearchInput"), dRes = byId("desktopResults"), mIn = byId("mobileSearchInput"), mRes = byId("mobileResults");
+        dIn.addEventListener("input", () => { if (!dIn.value.trim()) { dRes.classList.remove("show"); return; } renderResults(dRes, runSearch(dIn.value)); dRes.classList.add("show"); });
+        dIn.addEventListener("focus", () => { if (dIn.value.trim()) dRes.classList.add("show"); });
+        mIn.addEventListener("input", () => { if (!mIn.value.trim()) { mRes.innerHTML = ""; return; } renderResults(mRes, runSearch(mIn.value)); });
+        function closeSearch() { byId("searchOverlay").classList.remove("show"); mIn.value = ""; mRes.innerHTML = ""; dRes.classList.remove("show"); }
+        [dRes, mRes].forEach((box) => box.addEventListener("click", (e) => { const it = e.target.closest(".res-item"); if (it) { goToPage(it.dataset.page); closeSearch(); dIn.value = ""; } }));
+        document.addEventListener("click", (e) => { if (!byId("desktopSearchWrap").contains(e.target)) dRes.classList.remove("show"); });
+        byId("mobileSearchBtn").addEventListener("click", () => { byId("searchOverlay").classList.add("show"); setTimeout(() => mIn.focus(), 280); });
+        byId("closeSearchBtn").addEventListener("click", closeSearch);
+
+        /* ---- تنظیمات ---- */
+        function setTheme(mode) { S.theme = mode; applySettings(); persist(); setTimeout(rebuildCharts, 40); toast(mode === "dark" ? "حالت تیره فعال شد" : "حالت روشن فعال شد"); }
+        $$(".theme-opt").forEach((b) => b.addEventListener("click", () => setTheme(b.dataset.mode)));
+        byId("quickTheme").addEventListener("click", () => setTheme(S.theme === "dark" ? "light" : "dark"));
+        $$(".accent-swatch").forEach((b) => b.addEventListener("click", () => { S.accent = b.dataset.accent; applySettings(); persist(); setTimeout(rebuildCharts, 40); toast("رنگ اصلی تغییر کرد"); }));
+        byId("fsMinus").addEventListener("click", () => { S.fontSize = Math.max(0, S.fontSize - 1); applySettings(); persist(); });
+        byId("fsPlus").addEventListener("click", () => { S.fontSize = Math.min(FS_VALUES.length - 1, S.fontSize + 1); applySettings(); persist(); });
+        byId("swAnim").addEventListener("click", () => { S.animations = !S.animations; applySettings(); persist(); rebuildCharts(); });
+        byId("swAuto").addEventListener("click", () => {
+          S.autosave = !S.autosave;
+          applySettings();
+          if (S.autosave) persist(); else { try { localStorage.removeItem(SKEY); } catch (e) {} }
+          toast(S.autosave ? "ذخیره خودکار فعال شد" : "ذخیره خودکار غیرفعال شد");
+        });
+        $$("[data-notif]").forEach((b) => b.addEventListener("click", () => { S.notif[b.dataset.notif] = !S.notif[b.dataset.notif]; applySettings(); persist(); }));
+        byId("saveProfileBtn").addEventListener("click", () => {
+          S.name = byId("profName").value.trim() || S.name;
+          S.role = byId("profRole").value.trim() || S.role;
+          applyProfile(); persist(); toast("اطلاعات پروفایل به‌روزرسانی شد");
+        });
+        byId("miniProfileBtn").addEventListener("click", () => goToPage("settings"));
+        byId("exportBtn").addEventListener("click", exportCSV);
+        byId("finChips").addEventListener("click", (e) => {
+          const b = e.target.closest(".seg-btn");
+          if (!b) return;
+          $$("#finChips .seg-btn").forEach((x) => x.classList.toggle("active", x === b));
+          metric = b.dataset.metric;
+          buildFin();
+        });
+        byId("convDir").addEventListener("click", (e) => {
+          const b = e.target.closest(".seg-btn");
+          if (!b) return;
+          $$("#convDir .seg-btn").forEach((x) => x.classList.toggle("active", x === b));
+          convDir = b.dataset.dir;
+          convert();
+        });
+        byId("convAmt").addEventListener("input", convert);
+        byId("convCur").addEventListener("change", convert);
+        window.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") { closeSheets(); closeNotif(); closeSearch(); }
+          if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); (innerWidth > 760 ? dIn : byId("mobileSearchBtn")).focus(); if (innerWidth <= 760) byId("mobileSearchBtn").click(); }
+        });
+        window.addEventListener("resize", () => { clearTimeout(window._rt); window._rt = setTimeout(() => Object.values(charts).forEach((c) => c && c.resize && c.resize()), 150); });
+
+        /* =====================================================================
+           راه‌اندازی
+           ===================================================================== */
+        applySettings();
+        applyProfile();
+        buildMarketUI();
+        seedHistoryFeed();
+        function seedHistoryFeed() {
+          const r = mulberry32(dayKey(gShift(0)) + 5);
+          for (let i = 9; i >= 1; i--) {
+            const at = Date.now() - i * (35000 + r() * 40000);
+            const v = Math.exp(Math.log(4.2e6) + 0.75 * gauss(r));
+            pushFeed({ type: "order", at, title: `سفارش #${toFaDigits(orderNo - i)}`, sub: CHANNELS[Math.floor(r() * CHANNELS.length)], val: fmtMoney(v) + " ت" }, true);
+          }
+          const c = CLIENTS[0];
+          pushFeed({ type: "client", at: Date.now() - 7 * 60000, title: "مشتری جدید ثبت شد", sub: c.name, val: c.value }, true);
+          pushFeed({ type: "pay", at: Date.now() - 4 * 60000, title: "پرداخت قسط دریافت شد", sub: CLIENTS[1].name, val: "۱۸۰ میلیون ت" }, true);
+          FEED.sort((a, b) => b.at - a.at);
+        }
+        seedNotifs();
+        buildSearchIndex();
+        paintKpis();
+        paintHero(false);
+        paintFinStats();
+        paintSubs();
+        paintProjects();
+        paintClients();
+        paintTeams();
+        paintSalesRibbon();
+        paintReports();
+        paintFeed(false);
+        paintReserves();
+        convert();
+        const startHash = location.hash.slice(1);
+        goToPage(META[startHash] ? startHash : "dashboard", true);
+        byId("sysUpdated").textContent = `${pad2(tehranNow().h)}:${pad2(tehranNow().mi)}`;
+
+        // ساعت و بازنشانی در نیمه‌شب
+        const dayAtLoad = dayKey(gShift(0));
+        setInterval(() => {
+          const t = tehranNow();
+          byId("clockTime").textContent = `${pad2(t.h)}:${pad2(t.mi)}`;
+          if (t.y * 10000 + t.m * 100 + t.d !== dayAtLoad) location.reload();
+          const now = Date.now();
+          MK.forEach((m) => { if (now >= m.next) { tickMarket(m); m.next = now + rnd(...CONFIG.marketTickMs); } });
+        }, 1000);
+        byId("clockTime").textContent = `${pad2(T.h)}:${pad2(T.mi)}`;
+        setInterval(() => { paintFeed(false); paintNotifs(); paintGreeting(); paintHero(false); paintKpis(); }, 30000);
+        setTimeout(orderLoop, rnd(4000, 9000));
+        setTimeout(eventLoop, rnd(40000, 90000));
+        if (window.Chart) ensureCharts(currentPage);
+        else window.addEventListener("load", () => ensureCharts(currentPage));
+      })();
+    </script>
+  </body>
+</html>
